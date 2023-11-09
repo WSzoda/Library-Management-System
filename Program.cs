@@ -8,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddDbContext<LibraryDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<LibraryDbContext>(options => {options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+options.EnableSensitiveDataLogging();} );
 
 var app = builder.Build();
 

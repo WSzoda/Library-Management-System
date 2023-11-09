@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Biblioteka.Models
 {
@@ -13,7 +14,6 @@ namespace Biblioteka.Models
         [MaxLength(50)]
         public string Surname  { get; set; } = string.Empty;
         public int CountryId { get; set; }
-        [Required]
         public Country Country { get; set; } = new Country();
         public IEnumerable<Book> Books { get; set; } = new List<Book>();
     }
