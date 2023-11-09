@@ -7,6 +7,6 @@ namespace Biblioteka.Models
         public int Id { get; set; }
         [Required]
         public string LanguageName { get; set; } = string.Empty;
-        public IEnumerable<Book> Books { get; set; } = new List<Book>();
+        public IEnumerable<Book>? Books { get; set; }
     }
 }

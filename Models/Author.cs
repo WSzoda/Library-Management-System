@@ -14,7 +14,7 @@ namespace Biblioteka.Models
         [MaxLength(50)]
         public string Surname  { get; set; } = string.Empty;
         public int CountryId { get; set; }
-        public Country Country { get; set; } = new Country();
-        public IEnumerable<Book> Books { get; set; } = new List<Book>();
+        public Country? Country { get; set; }
+        public IEnumerable<Book>? Books { get; set; }
     }
 }

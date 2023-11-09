@@ -6,8 +6,8 @@ namespace Biblioteka.Models
         public string Description { get; set; } = string.Empty;
         public int Rating { get; set; }
         public int BookId { get; set; }
-        public Book Book { get; set; } = new Book();
+        public Book? Book { get; set; }
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; } = new Customer();
+        public Customer? Customer { get; set; }
     }
 }

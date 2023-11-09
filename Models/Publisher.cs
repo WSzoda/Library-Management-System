@@ -10,7 +10,7 @@ namespace Biblioteka.Models
         public string Name { get; set; } = string.Empty;
         public int YearOfCreation { get; set; }
         public int CountryId { get; set; }
-        public Country Country { get; set; } = new Country();
-        public IEnumerable<Book> Books { get; set; } = new List<Book>();
+        public Country? Country { get; set; }
+        public IEnumerable<Book>? Books { get; set; }
     }
 }
