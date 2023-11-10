@@ -21,7 +21,10 @@ namespace Biblioteka.Data
             modelBuilder.Entity<Book>().HasOne(b => b.Genre).WithMany(g => g.Books).HasForeignKey(b => b.GenreId);
             modelBuilder.Entity<Book>().HasOne(b => b.Publisher).WithMany(p => p.Books).HasForeignKey(b => b.PublisherId);
             modelBuilder.Entity<Book>().HasOne(b => b.Language).WithMany(l => l.Books).HasForeignKey(b => b.LanguageId);
-            modelBuilder.Entity<Book>().HasMany(b => b.Authors).WithMany(a => a.Books);
+            modelBuilder.Entity<AuthorBook>().HasKey(ab => new { ab.AuthorId, ab.BookId });
+            modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Author).WithMany(a => a.AuthorBooks).HasForeignKey(ab => ab.AuthorId);
+            modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Book).WithMany(b => b.BookAuthors).HasForeignKey(ab => ab.BookId);
+            
             modelBuilder.Entity<Review>().HasOne(r => r.Book).WithMany(b => b.Reviews).HasForeignKey(r => r.BookId);
             modelBuilder.Entity<Review>().HasOne(r => r.Customer).WithMany(r => r.Reviews).HasForeignKey(r => r.CustomerId);
             modelBuilder.Entity<Rental>().HasOne(r => r.Book).WithMany(b => b.Rentals).HasForeignKey(r => r.BookId);
@@ -35,20 +38,20 @@ namespace Biblioteka.Data
                 new Language { Id = 2, LanguageName = "Polish" },
                 new Language { Id = 3, LanguageName = "German" },
                 new Language { Id = 4, LanguageName = "French" }
-                );
+            );
             
             modelBuilder.Entity<Genre>().HasData(
                 new Genre { Id = 1, Name = "Fantasy" },
                 new Genre { Id = 2, Name = "Science Fiction" },
                 new Genre { Id = 3, Name = "Horror" },
                 new Genre { Id = 4, Name = "Romance" }
-                );
+            );
             
             modelBuilder.Entity<Worker>().HasData(
                 new Worker{ Id = 1, Name = "Wojtek", Surname = "Szoda", Email = "test@wp.pl", Role = "Admin"},
                 new Worker{ Id = 2, Name = "Jan", Surname = "Kowalski", Email = "kowalski@test.pl", Role = "Worker"},
                 new Worker{ Id = 3, Name = "Adam", Surname = "Nowak", Email = "adam@nowak.pl", Role = "Worker"}
-                );
+            );
             
             modelBuilder.Entity<Country>().HasData(
                 new Country { Id = 1, Name = "Poland" },
@@ -56,7 +59,7 @@ namespace Biblioteka.Data
                 new Country { Id = 3, Name = "United States" },
                 new Country { Id = 4, Name = "France" },
                 new Country { Id = 5, Name = "Germany" }
-                );
+            );
 
             modelBuilder.Entity<Author>().HasData(
                 new Author { Id = 1, Name = "J.R.R.", Surname = "Tolkien", CountryId = 2},
@@ -77,20 +80,39 @@ namespace Biblioteka.Data
                 new Author { Id = 16, Name = "Mark", Surname = "Twain", CountryId = 3 },
                 new Author { Id = 17, Name = "Charles", Surname = "Dickens", CountryId = 2 },
                 new Author { Id = 18, Name = "Fyodor", Surname = "Dostoevsky", CountryId = 5 }
-                );
+            );
 
             modelBuilder.Entity<Publisher>().HasData(
                 new Publisher { Id = 1, Name = "PWN", CountryId = 1 },
                 new Publisher { Id = 2, Name = "Wydawnictwo Literackie", CountryId = 1 },
                 new Publisher { Id = 3, Name = "Penguin Books", CountryId = 2 }
-                );
+            );
             
-
             modelBuilder.Entity<Customer>().HasData(
                 new Customer { Id = 1, Name = "Jan", Surname = "Kowalski", Email = "kowlski@jan.pl", PhoneNumber = "123456789", Address = "ul. Kowalska 1, 00-000 Warszawa" },
                 new Customer { Id = 2, Name = "Adam", Surname = "Nowak", Email = "adam@nowak.pl", PhoneNumber = "987654321", Address = "ul. Nowaka 1, 00-000 Warszawa" },
                 new Customer { Id = 3, Name = "Kamil", Surname = "Nowacki", Email = "kamil@nowacki.pl", PhoneNumber = "123123123", Address = "ul. Nowacki 1, 00-000 Warszawa" }
-                );
+            );
+            
+            modelBuilder.Entity<Book>().HasData(
+                new Book
+                {
+                    Id = 1,
+                    Title = "The Great Gatsby",
+                    YearOfPublishing = 1925,
+                    NumberOfPages = 180,
+                    Description = "A novel by F. Scott Fitzgerald",
+                    ISBN = "978-3-16-148410-0",
+                    Image = "great_gatsby.jpg",
+                    LanguageId = 1,
+                    GenreId = 2,
+                    PublisherId = 3, 
+                }
+            );
+            
+            modelBuilder.Entity<AuthorBook>().HasData(
+                new AuthorBook { AuthorId = 1, BookId = 1 }
+            );
         }
     }
 }

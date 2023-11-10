@@ -15,6 +15,6 @@ namespace Biblioteka.Models
         public string Surname  { get; set; } = string.Empty;
         public int CountryId { get; set; }
         public Country? Country { get; set; }
-        public IEnumerable<Book>? Books { get; set; }
+        public IEnumerable<AuthorBook>? AuthorBooks { get; set; }
     }
 }

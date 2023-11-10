@@ -15,7 +15,7 @@ namespace Biblioteka.Models
         public Genre? Genre { get; set; }
         public int PublisherId { get; set; }
         public Publisher? Publisher { get; set; }
-        public IEnumerable<Author>? Authors { get; set; }
+        public IEnumerable<AuthorBook>? BookAuthors { get; set; }
         public IEnumerable<Review>? Reviews { get; set; }
         public IEnumerable<Rental>? Rentals { get; set; }
     }
