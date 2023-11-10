@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteka.Data.Concrete
 {
-    public class BooksRepository : IBooksRepository
+    public class BookRepository : IBookRepository
     {
         private readonly LibraryDbContext _context;
 
-        public BooksRepository(LibraryDbContext context)
+        public BookRepository(LibraryDbContext context)
         {
             _context = context;
         }
 
-        public async void AddBook(Book book)
+        public async Task AddBook(Book book)
         {
             ArgumentNullException.ThrowIfNull(book);
 
@@ -21,7 +21,7 @@ namespace Biblioteka.Data.Concrete
             await _context.SaveChangesAsync();
         }
 
-        public async void DeleteBook(int id)
+        public async Task DeleteBook(int id)
         {
             if(id <= 0)
             {
@@ -69,7 +69,7 @@ namespace Biblioteka.Data.Concrete
             ArgumentNullException.ThrowIfNull(book);
             return book;
         }
-        public async void UpdateBook(Book book)
+        public async Task UpdateBook(Book book)
         {
             ArgumentNullException.ThrowIfNull(book);
 

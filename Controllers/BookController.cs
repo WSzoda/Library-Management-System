@@ -7,12 +7,12 @@ namespace Biblioteka.Controllers
 {
     [ApiController]
     [Route("api/books")]
-    public class BooksController : ControllerBase
+    public class BookController : ControllerBase
     {
-        private readonly IBooksRepository _booksRepository;
-        private readonly ILogger<BooksController> _logger;
+        private readonly IBookRepository _booksRepository;
+        private readonly ILogger<BookController> _logger;
 
-        public BooksController(IBooksRepository booksRepository, ILogger<BooksController> logger)
+        public BookController(IBookRepository booksRepository, ILogger<BookController> logger)
         {
             _booksRepository = booksRepository;
             _logger = logger;

@@ -2,12 +2,12 @@ using Biblioteka.Models;
 
 namespace Biblioteka.Data.Abstract
 {
-    public interface IBooksRepository
+    public interface IBookRepository
     {
         Task<IEnumerable<Book>> GetAllBooks();
         Task<Book> GetBookById(int id);
-        void AddBook(Book book);
-        void UpdateBook(Book book);
-        void DeleteBook(int id);
+        Task AddBook(Book book);
+        Task UpdateBook(Book book);
+        Task DeleteBook(int id);
     }
 }
