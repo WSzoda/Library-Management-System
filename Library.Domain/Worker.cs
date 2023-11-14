@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Biblioteka.Models
+namespace Library.Domain
 {
     public class Worker
     {

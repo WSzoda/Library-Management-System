@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Biblioteka.Models
+namespace Library.Domain
 {
     [Table("AuthorBooks")]
     public class AuthorBook

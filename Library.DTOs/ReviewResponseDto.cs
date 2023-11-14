@@ -1,4 +1,4 @@
-﻿namespace Biblioteka.Models.DTOs
+﻿namespace Library.DTOs
 {
     public class ReviewResponseDto
     {

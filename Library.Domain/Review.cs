@@ -1,4 +1,4 @@
-namespace Biblioteka.Models
+namespace Library.Domain
 {
     public class Review
     {

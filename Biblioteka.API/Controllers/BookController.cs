@@ -1,7 +1,7 @@
 using AutoMapper;
 using Biblioteka.Data.Abstract;
-using Biblioteka.Models;
-using Biblioteka.Models.DTOs;
+using Library.Domain;
+using Library.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 

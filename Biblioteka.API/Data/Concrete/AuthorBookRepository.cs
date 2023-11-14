@@ -1,5 +1,5 @@
 ﻿using Biblioteka.Data.Abstract;
-using Biblioteka.Models;
+using Library.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteka.Data.Concrete

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Biblioteka.Models;
-using Biblioteka.Models.DTOs;
+using Library.Domain;
+using Library.DTOs;
 
 namespace Biblioteka.Profiles
 {

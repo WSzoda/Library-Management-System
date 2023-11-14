@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Biblioteka.Models
+namespace Library.Domain
 {
     public class Publisher
     {

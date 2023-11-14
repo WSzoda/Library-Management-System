@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Biblioteka.Models.DTOs
+﻿namespace Library.DTOs
 {
     public class CountryResponseDto
     {
