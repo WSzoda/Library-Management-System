@@ -12,7 +12,7 @@
         public LanguageResponseDto? Language { get; set; }
         public GenreResponseDto? Genre { get; set; }
         public PublisherResponseDto? Publisher { get; set; }
-        public IEnumerable<AuthorResponseDto> Authors { get; set; } = new List<AuthorResponseDto>();
-        public IEnumerable<Review>? Reviews { get; set; } = new List<Review>();
+        public IEnumerable<AuthorResponseDto>? Authors { get; set; } = new List<AuthorResponseDto>();
+        public IEnumerable<ReviewResponseDto>? Reviews { get; set; } = new List<ReviewResponseDto>();
     }
 }

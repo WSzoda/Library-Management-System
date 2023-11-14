@@ -25,11 +25,16 @@ namespace Biblioteka.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBooks()
+        public async Task<ActionResult<BookResponseDto>> GetBooks()
         {
             _logger.LogInformation("Getting all books");
             var books = await _booksRepository.GetAllBooks();
-            return Ok(books);
+            var booksDto = _mapper.Map<List<BookResponseDto>>(books);
+            foreach(var book in booksDto)
+            {
+                book.Authors = _mapper.Map<List<AuthorResponseDto>>(books.Where(b => b.Id == book.Id).SelectMany(b => b.BookAuthors!).Select(ba => ba.Author).ToList());
+            }
+            return Ok(booksDto);
         }
 
         [HttpGet("{id}")]
@@ -39,7 +44,9 @@ namespace Biblioteka.Controllers
             {
                 _logger.LogInformation($"Getting book with id {id}");
                 var book = await _booksRepository.GetBookById(id);
-                return Ok(book);
+                var bookDto = _mapper.Map<BookResponseDto>(book);
+                bookDto.Authors = _mapper.Map<List<AuthorResponseDto>>(book.BookAuthors!.Select(ba => ba.Author).ToList());
+                return Ok(bookDto);
             }
             catch(ArgumentNullException)
             {
@@ -48,15 +55,20 @@ namespace Biblioteka.Controllers
             }
         }
 
-        [HttpPut]
-        public IActionResult UpdateBook(Book book)
+        [HttpPut("{id}")]
+        public IActionResult UpdateBook(int id, Book book)
         {
-            if(book is null)
+            if (book is null)
             {
                 _logger.LogError("Book was null.");
                 return BadRequest("Book was null.");
             }
-            if(!ModelState.IsValid)
+            if (id != book.Id)
+            {
+                _logger.LogError("Mismatching Ids.");
+                return BadRequest("Mismatching Ids.");
+            }
+            if (!ModelState.IsValid)
             {
                 _logger.LogError("Book was invalid.");
                 return BadRequest("Book was invalid.");
@@ -79,6 +91,22 @@ namespace Biblioteka.Controllers
             {
                 _logger.LogError($"Book {book.Id} was not updated.");
                 return BadRequest($"Book {book.Id} was not updated.");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteBook(int id)
+        {
+            try
+            {
+                _logger.LogInformation($"Deleting book {id}");
+                await _booksRepository.DeleteBook(id);
+                return Ok();
+            } 
+            catch (Exception)
+            {
+                _logger.LogError($"Book {id} was not deleted.");
+                return NotFound($"Book {id} was not deleted.");
             }
         }
 

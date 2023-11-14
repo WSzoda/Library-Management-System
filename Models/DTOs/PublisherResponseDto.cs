@@ -8,6 +8,5 @@ namespace Biblioteka.Models.DTOs
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int YearOfCreation { get; set; }
-        public CountryResponseDto? Country { get; set; }
     }
 }

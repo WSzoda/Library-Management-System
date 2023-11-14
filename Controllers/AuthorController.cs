@@ -1,5 +1,7 @@
-﻿using Biblioteka.Data.Abstract;
+﻿using AutoMapper;
+using Biblioteka.Data.Abstract;
 using Biblioteka.Models;
+using Biblioteka.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteka.Controllers
@@ -9,26 +11,32 @@ namespace Biblioteka.Controllers
     public class AuthorController : ControllerBase
     {
         private readonly IAuthorRepository _authorRepository;
+        private readonly ILogger<AuthorController> _logger;
+        private readonly IMapper _mapper;
 
-        public AuthorController(IAuthorRepository authorRepository)
+        public AuthorController(IAuthorRepository authorRepository, IMapper mapper, ILogger<AuthorController> logger)
         {
             _authorRepository = authorRepository;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
+        public async Task<ActionResult<IEnumerable<AuthorResponseDto>>> GetAuthors()
         {
             var authors = await _authorRepository.GetAllAuthors();
-            return Ok(authors);
+            var authorsDto = _mapper.Map<List<AuthorResponseDto>>(authors);
+            return Ok(authorsDto);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Author>> GetAuthorById(int id)
+        public async Task<ActionResult<AuthorResponseDto>> GetAuthorById(int id)
         {
             try
             {
                 var author = await _authorRepository.GetAuthorById(id);
-                return Ok(author);
+                var authorDto = _mapper.Map<AuthorResponseDto>(author);
+                return Ok(authorDto);
             }
             catch (ArgumentNullException)
             {
@@ -37,7 +45,7 @@ namespace Biblioteka.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddAuthor([FromBody] Author author)
+        public async Task<ActionResult> AddAuthor(Author author)
         {
             try
             {
@@ -51,11 +59,17 @@ namespace Biblioteka.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAuthor(int id, [FromBody] Author author)
+        public async Task<ActionResult> UpdateAuthor(int id, Author author)
         {
+            if(author is null)
+            {
+                _logger.LogError("Author is null");
+                return BadRequest("Author is null");
+            }
             if (id != author.Id)
             {
-                return BadRequest();
+                _logger.LogError("Mismatching Ids.");
+                return BadRequest("Mismatching Ids.");
             }
 
             try
