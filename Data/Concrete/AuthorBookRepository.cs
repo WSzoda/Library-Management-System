@@ -42,25 +42,28 @@ namespace Biblioteka.Data.Concrete
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<AuthorBook>> GetAuthorBooksForAuthorId(int authorId)
+        public async Task<IEnumerable<AuthorBook>> GetAuthorBooks(int id, bool getByAuthorId = true)
         {
-            if(authorId < 0)
+            if (id < 0)
             {
-                throw new ArgumentException("Invalid argument: authorId cannot be less than zero.");
+                throw new ArgumentException("Invalid argument: ID cannot be less than zero.");
             }
-            var authorBooks = await _context.AuthorBooks.Include(ab => ab.Author).Include(ab => ab.Book).Where(ab => ab.AuthorId == authorId).ToListAsync();
+
+            IQueryable<AuthorBook> query = _context.AuthorBooks.Include(ab => ab.Author).Include(ab => ab.Book);
+
+            if (getByAuthorId)
+            {
+                query = query.Where(ab => ab.AuthorId == id);
+            }
+            else
+            {
+                query = query.Where(ab => ab.BookId == id);
+            }
+
+            var authorBooks = await query.ToListAsync();
             return authorBooks;
         }
 
-        public async Task<IEnumerable<AuthorBook>> GetAuthorBooksForBookId(int bookId)
-        {
-            if (bookId < 0)
-            {
-                throw new ArgumentException("Invalid argument: bookId cannot be less than zero.");
-            }
-            var authorBooks = await _context.AuthorBooks.Include(ab => ab.Author).Include(ab => ab.Book).Where(ab => ab.BookId == bookId).ToListAsync();
-            return authorBooks;
-        }
         public async Task<IEnumerable<AuthorBook>> GetAuthorBooks()
         {
             return await _context.AuthorBooks.Include(ab => ab.Author).Include(ab => ab.Book).ToListAsync();
