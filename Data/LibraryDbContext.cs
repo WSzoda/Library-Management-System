@@ -10,6 +10,7 @@ namespace Biblioteka.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<AuthorBook> AuthorBooks { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Worker> Workers { get; set; }

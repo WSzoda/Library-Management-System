@@ -20,6 +20,11 @@ Log.Logger = new LoggerConfiguration()
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<IAuthorBookRepository, AuthorBookRepository>();
+
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddJsonOptions(
@@ -27,6 +32,8 @@ builder.Services.AddControllers().AddJsonOptions(
         );
 builder.Services.AddDbContext<LibraryDbContext>(options => {options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));});
 builder.Host.UseSerilog();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

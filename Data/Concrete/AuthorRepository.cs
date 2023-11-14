@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteka.Data.Concrete
 {
-    public class AuthorsRepository : IAuthorRepository
+    public class AuthorRepository : IAuthorRepository
     {
         private readonly LibraryDbContext _context;
 
-        public AuthorsRepository(LibraryDbContext context)
+        public AuthorRepository(LibraryDbContext context)
         {
             _context = context;
         }

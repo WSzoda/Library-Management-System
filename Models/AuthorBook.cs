@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Biblioteka.Models
 {
+    [Table("AuthorBooks")]
     public class AuthorBook
     {
         public int AuthorId { get; set; }

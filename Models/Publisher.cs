@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Biblioteka.Models
 {
@@ -11,6 +12,7 @@ namespace Biblioteka.Models
         public int YearOfCreation { get; set; }
         public int CountryId { get; set; }
         public Country? Country { get; set; }
+        [JsonIgnore]
         public IEnumerable<Book>? Books { get; set; }
     }
 }
