@@ -1,0 +1,39 @@
+﻿@foreach (var book in BooksList)
+{
+    <div class="card m-3 col-xl-5 col-lg-10 p-1 shadow">
+        <div class="row g-0">
+            <div class="col-md-3 d-flex justify-content-center align-items-center">
+                <img src="https://localhost:7158/images/@book.Image" class="img-fluid rounded" alt="Book Image">
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h5 class="card-title">@book.Title</h5>
+                    @if (book.Description.Length > 100)
+                    {
+                        <p class="card-text">@book.Description.Substring(0, 100)...</p>
+                    }
+                    else
+                    {
+                        <p class="card-text">@book.Description</p>
+                    }
+                    <ul class="list-group list-group-flush">
+                        @if (book.Genre is not null)
+                        {
+                            <li class="list-group-item">Genre: @book.Genre.Name</li>
+                        }
+                        <li class="list-group-item">Year of Publishing: @book.YearOfPublishing</li>
+                        <li class="list-group-item">Number of Pages: @book.NumberOfPages</li>
+                        <li class="list-group-item">ISBN: @book.ISBN</li>
+                    </ul>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary mt-4">Rent Book</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@code {
+    [Parameter]
+    public IEnumerable<BookResponseDto> BooksList { get; set; } = new List<BookResponseDto>();
+}

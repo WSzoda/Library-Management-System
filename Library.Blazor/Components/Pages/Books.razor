@@ -1,7 +1,8 @@
-﻿@page "/books"
+﻿@using Library.Blazor.Components.Comps
+@page "/books"
 
-<div class="row">
-    @if(IsLoading)
+<div class="row d-flex justify-content-center">
+    @if (IsLoading)
     {
         <div class="col-md-12">
             <h3 class="text-center">Loading...</h3>
@@ -9,37 +10,26 @@
     }
     else
     {
-        @foreach (var book in BooksList)
-        {
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-2">
-                        <img src="https://localhost:7158/images/@book.Image" class="img-fluid rounded-start" alt="Book Image">
-                    </div>
-                    <div class="col-md-10">
-                        <div class="card-body">
-                            <h5 class="card-title">@book.Title</h5>
-                            @if (book.Description.Length > 100)
-                            {
-                                <p class="card-text">@book.Description.Substring(0, 100)...</p>
-                            }
-                            else
-                            {
-                                <p class="card-text">@book.Description</p>
-                            }
-                            <ul class="list-group list-group-flush">
-                                @if (book.Genre is not null)
-                                {
-                                    <li class="list-group-item">Genre: @book.Genre.Name</li>
-                                }
-                                <li class="list-group-item">Year of Publishing: @book.YearOfPublishing</li>
-                                <li class="list-group-item">Number of Pages: @book.NumberOfPages</li>
-                                <li class="list-group-item">ISBN: @book.ISBN</li>
-                            </ul>
-                        </div>
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-2 sidebar pe-3 ps-4 pt-3 shadow">
+                    <div>
+                        <!-- Add your filter settings here -->
+                        <h5>Filter Settings</h5>
+                        <GenrePicker GenresList="@GenresList" Values="@SelectedGenresIds" SelectedGenresChanged="HandleSelectedGenresChanged" />
+                        <!-- Add your filter controls, e.g., dropdowns, checkboxes, etc. -->
+                        <!-- Add a search input -->
+                        <input type="text" class="form-control mb-2" placeholder="Search..."/>
+                        <button @onclick="Test" class="btn btn-primary">Apply Filters</button>
                     </div>
                 </div>
+
+                <!-- Book List -->
+                <div class="row justify-content-center col-md-10">
+                    <BookListing BooksList="BooksList"/>
+                </div>
             </div>
-        }
+        </div>
     }
 </div>

@@ -9,6 +9,7 @@ namespace Biblioteka.Profiles
         public GenreProfile()
         {
             CreateMap<Genre, GenreResponseDto>();
+            CreateMap<GenreToCreateDto, Genre>();
         }
     }
 }
