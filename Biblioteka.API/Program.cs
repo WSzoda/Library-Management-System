@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using Biblioteka.Data;
 using Biblioteka.Data.Abstract;
 using Biblioteka.Data.Concrete;
+using Library.API.Data.Abstract;
+using Library.API.Data.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -22,6 +24,7 @@ Log.Logger = new LoggerConfiguration()
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IAuthorBookRepository, AuthorBookRepository>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 
 
 

@@ -10,11 +10,13 @@ namespace Library.Blazor.Components.Pages
         [Inject]
         private IBooksService BooksService { get; set; }
 
-        private IEnumerable<BookResponseDto> BooksList { get; set; }
+        private IEnumerable<BookResponseDto> BooksList { get; set; } = new List<BookResponseDto>();
+        private bool IsLoading { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
             BooksList = await BooksService.GetBooksAsync();
+            IsLoading = false;
         }
     }
 }

@@ -1,36 +1,45 @@
 ﻿@page "/books"
 
 <div class="row">
-    @foreach (var book in BooksList)
+    @if(IsLoading)
     {
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-2">
-                    <img src="https://localhost:7158/images/@book.Image" class="img-fluid rounded-start" alt="Book Image">
-                </div>
-                <div class="col-md-10">
-                    <div class="card-body">
-                        <h5 class="card-title">@book.Title</h5>
-                        @if(book.Description.Length > 100)
-                        {
-                            <p class="card-text">@book.Description.Substring(0, 100)...</p>
-                        }
-                        else
-                        {
-                            <p class="card-text">@book.Description</p>
-                        }
-                        <ul class="list-group list-group-flush">
-                            @if (book.Genre is not null)
+        <div class="col-md-12">
+            <h3 class="text-center">Loading...</h3>
+        </div>
+    }
+    else
+    {
+        @foreach (var book in BooksList)
+        {
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-2">
+                        <img src="https://localhost:7158/images/@book.Image" class="img-fluid rounded-start" alt="Book Image">
+                    </div>
+                    <div class="col-md-10">
+                        <div class="card-body">
+                            <h5 class="card-title">@book.Title</h5>
+                            @if (book.Description.Length > 100)
                             {
-                                <li class="list-group-item">Genre: @book.Genre.Name</li>
+                                <p class="card-text">@book.Description.Substring(0, 100)...</p>
                             }
-                            <li class="list-group-item">Year of Publishing: @book.YearOfPublishing</li>
-                            <li class="list-group-item">Number of Pages: @book.NumberOfPages</li>
-                            <li class="list-group-item">ISBN: @book.ISBN</li>
-                        </ul>
+                            else
+                            {
+                                <p class="card-text">@book.Description</p>
+                            }
+                            <ul class="list-group list-group-flush">
+                                @if (book.Genre is not null)
+                                {
+                                    <li class="list-group-item">Genre: @book.Genre.Name</li>
+                                }
+                                <li class="list-group-item">Year of Publishing: @book.YearOfPublishing</li>
+                                <li class="list-group-item">Number of Pages: @book.NumberOfPages</li>
+                                <li class="list-group-item">ISBN: @book.ISBN</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     }
 </div>

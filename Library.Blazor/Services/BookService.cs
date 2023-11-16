@@ -20,9 +20,12 @@ namespace Library.Blazor.Services
             return books!;
         }
 
-        public Task<BookResponseDto> GetBookAsync(int id)
+        public async Task<BookResponseDto> GetBookAsync(int id)
         {
-            throw new NotImplementedException();
+            var stream = await _httpClient.GetStreamAsync($"api/books/{id}");
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true};
+            var book = await JsonSerializer.DeserializeAsync<BookResponseDto>(stream, options);
+            return book!;
         }
     }
 }
