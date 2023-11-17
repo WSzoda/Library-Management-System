@@ -33,9 +33,9 @@ namespace Library.Blazor.Components.Pages
             Console.WriteLine($"Selected genres: {string.Join(", ", SelectedGenresIds)}");
         }
 
-        private void Test()
+        private async Task Filter()
         { 
-            Console.WriteLine("Test");
+            BooksList = await BooksService.GetBooksAsync(SelectedGenresIds.ToList());
         }
     }
 }

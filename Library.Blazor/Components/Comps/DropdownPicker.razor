@@ -1,0 +1,34 @@
+﻿
+
+<div class="rz-text-align-center mb-4">
+    <RadzenDropDown @bind-Value=@Values Data=@ItemsList TextProperty="Name" ValueProperty="Id" Change="HandleSelectedValuesChanged"
+                    Multiple=true AllowClear=true Placeholder="@Placeholder" Chips=true Style="width: 100%; max-width: 400px;" />
+</div>
+
+
+@code {
+
+    [Parameter]
+    public string Placeholder { get; set; } = "Select...";
+
+    [Parameter]
+    public IEnumerable<ItemList> ItemsList { get; set; } = new List<ItemList>();
+
+    [Parameter]
+    public IEnumerable<int>? Values { get; set; } = new List<int>();
+
+    [Parameter]
+    public EventCallback<List<int>> SelectedValuesChanged { get; set; }
+
+    private async Task HandleSelectedValuesChanged()
+    {
+        var result = Values?.ToList() ?? new List<int>();
+        await SelectedValuesChanged.InvokeAsync(result);
+    }
+
+    public class ItemList
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = String.Empty;
+    }
+}

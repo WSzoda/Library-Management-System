@@ -17,11 +17,11 @@
                     <div>
                         <h5>Search</h5>
                         <input type="text" class="form-control mb-2" placeholder="Search..." />
-                        <button @onclick="Test" class="btn btn-primary mb-4">Search</button>
+                        <button @onclick="Filter" class="btn btn-primary mb-4">Search</button>
 
                         <h5>Filter Settings</h5>
-                        <GenrePicker GenresList="@GenresList" Values="@SelectedGenresIds" SelectedGenresChanged="HandleSelectedGenresChanged" />
-                        <button @onclick="Test" class="btn btn-primary">Apply Filters</button>
+                        <DropdownPicker Placeholder="Select Genre" Values="@SelectedGenresIds" ItemsList="GenresList.Select(dto => new DropdownPicker.ItemList {Id = dto.Id, Name = dto.Name }).ToList()" SelectedValuesChanged="HandleSelectedGenresChanged"/>
+                        <button @onclick="Filter" class="btn btn-primary">Apply Filters</button>
                     </div>
                 </div>
 

@@ -4,7 +4,7 @@ namespace Biblioteka.Data.Abstract
 {
     public interface IBookRepository
     {
-        Task<IEnumerable<Book>> GetAllBooks();
+        Task<IEnumerable<Book>> GetAllBooks(List<int>? genreIdsFilter = null);
         Task<Book> GetBookById(int id);
         Task AddBook(Book book);
         Task UpdateBook(Book book);

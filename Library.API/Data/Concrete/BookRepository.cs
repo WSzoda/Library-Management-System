@@ -35,17 +35,24 @@ namespace Biblioteka.Data.Concrete
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooks()
+        public async Task<IEnumerable<Book>> GetAllBooks(List<int>? genreIdsFilter = null)
         {
-            var books = await _context.Books
+            var query = _context.Books
                 .AsNoTracking()
                 .Include(b => b.Language)
                 .Include(b => b.Genre)
                 .Include(b => b.Publisher)
-                .Include(b => b.BookAuthors!.Select(ba => ba.Author))
+                .Include(b => b.BookAuthors!)
+                .ThenInclude(ba => ba.Author)
                 .Include(b => b.Reviews)
-                .AsSplitQuery()
-                .ToListAsync();
+                .AsSplitQuery();
+
+            if (genreIdsFilter is not null && genreIdsFilter.Any())
+            {
+                query = query.Where(b => genreIdsFilter.Contains(b.GenreId));
+            }
+
+            var books = await query.ToListAsync();
             return books;
         }
 

@@ -25,10 +25,10 @@ namespace Biblioteka.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<BookResponseDto>> GetBooks()
+        public async Task<ActionResult<BookResponseDto>> GetBooks([FromQuery] List<int> genreIds)
         {
             _logger.LogInformation("Getting all books");
-            var books = await _booksRepository.GetAllBooks();
+            var books = await _booksRepository.GetAllBooks(genreIds);
             var booksDto = _mapper.Map<List<BookResponseDto>>(books);
             foreach(var book in booksDto)
             {
