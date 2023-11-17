@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Library.Blazor.Components;
-using Library.Blazor.Services;
+using Library.Blazor.Services.BookService;
+using Library.Blazor.Services.GenreService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

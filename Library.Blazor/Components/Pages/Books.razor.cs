@@ -1,4 +1,5 @@
-﻿using Library.Blazor.Services;
+﻿using Library.Blazor.Services.BookService;
+using Library.Blazor.Services.GenreService;
 using Library.Domain;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
@@ -22,7 +23,7 @@ namespace Library.Blazor.Components.Pages
         protected override async Task OnInitializedAsync()
         {
             GenresList = await GenreService.GetGenresAsync();
-            BooksList = await BooksService.GetBooksAsync();
+            BooksList = await BooksService.GetBooksAsync(null);
             IsLoading = false;
         }
 

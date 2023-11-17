@@ -1,7 +1,8 @@
 ﻿
-    <div class="rz-text-align-center mb-4">
+
+<div class="rz-text-align-center mb-4">
     <RadzenDropDown @bind-Value=@Values Data=@GenresList TextProperty="Name" ValueProperty="Id" Change="HandleSelectedGenresChanged"
-                        Multiple=true AllowClear=true Placeholder="Select Genres" Chips=true Style="width: 100%; max-width: 400px;" />
+                    Multiple=true AllowClear=true Placeholder="Select Genres" Chips=true Style="width: 100%; max-width: 400px;" />
     </div>
 
 
@@ -19,10 +20,5 @@
     {
         var result = Values?.ToList() ?? new List<int>();
         await SelectedGenresChanged.InvokeAsync(result);
-    }
-
-    public void Test()
-    {
-        Console.WriteLine("Test");
     }
 }

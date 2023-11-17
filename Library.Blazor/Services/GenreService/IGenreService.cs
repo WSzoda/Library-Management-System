@@ -1,6 +1,6 @@
 ﻿using Library.DTOs;
 
-namespace Library.Blazor.Services
+namespace Library.Blazor.Services.GenreService
 {
     public interface IGenreService
     {

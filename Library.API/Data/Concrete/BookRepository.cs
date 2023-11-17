@@ -38,11 +38,11 @@ namespace Biblioteka.Data.Concrete
         public async Task<IEnumerable<Book>> GetAllBooks()
         {
             var books = await _context.Books
+                .AsNoTracking()
                 .Include(b => b.Language)
                 .Include(b => b.Genre)
                 .Include(b => b.Publisher)
-                .Include(b => b.BookAuthors!)
-                .ThenInclude(ba => ba.Author)
+                .Include(b => b.BookAuthors!.Select(ba => ba.Author))
                 .Include(b => b.Reviews)
                 .AsSplitQuery()
                 .ToListAsync();

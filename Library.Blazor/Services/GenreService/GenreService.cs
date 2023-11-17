@@ -1,7 +1,7 @@
 ﻿using Library.DTOs;
 using System.Text.Json;
 
-namespace Library.Blazor.Services
+namespace Library.Blazor.Services.GenreService
 {
     public class GenreService : IGenreService
     {
