@@ -5,8 +5,7 @@ namespace Library.Blazor.Services.BookService
 {
     public interface IBooksService
     {
-        Task<IEnumerable<BookResponseDto>> GetBooksAsync();
-        Task<IEnumerable<BookResponseDto>> GetBooksAsync(List<int>? genreIds);
+        Task<IEnumerable<BookResponseDto>> GetBooksAsync(List<int>? genreIds, List<int>? languageIds);
         Task<BookResponseDto> GetBookAsync(int id);
     }
 }

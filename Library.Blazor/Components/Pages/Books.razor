@@ -21,6 +21,7 @@
 
                         <h5>Filter Settings</h5>
                         <DropdownPicker Placeholder="Select Genre" Values="@SelectedGenresIds" ItemsList="GenresList.Select(dto => new DropdownPicker.ItemList {Id = dto.Id, Name = dto.Name }).ToList()" SelectedValuesChanged="HandleSelectedGenresChanged"/>
+                        <DropdownPicker Placeholder="Select Language" Values="@SelectedLanguagesIds" ItemsList="LanguagesList.Select(l => new DropdownPicker.ItemList{ Id = l.Id, Name = l.LanguageName})" SelectedValuesChanged="HandleSelectedLanguagesChanged"/>
                         <button @onclick="Filter" class="btn btn-primary">Apply Filters</button>
                     </div>
                 </div>

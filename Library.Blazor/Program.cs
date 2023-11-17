@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Library.Blazor.Components;
 using Library.Blazor.Services.BookService;
 using Library.Blazor.Services.GenreService;
+using Library.Blazor.Services.LanguageService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -11,6 +12,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddHttpClient<IBooksService, BookService>(
     client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 builder.Services.AddHttpClient<IGenreService, GenreService>(
+    client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+builder.Services.AddHttpClient<ILanguageService, LanguageService>(
     client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 
 

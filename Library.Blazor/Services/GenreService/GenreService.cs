@@ -5,6 +5,7 @@ namespace Library.Blazor.Services.GenreService
 {
     public class GenreService : IGenreService
     {
+        private const string Endpoint = "api/genres";
         private readonly HttpClient _httpClient;
 
         public GenreService(HttpClient httpClient)
@@ -15,7 +16,7 @@ namespace Library.Blazor.Services.GenreService
 
         public async Task<IEnumerable<GenreResponseDto>> GetGenresAsync()
         {
-            var stream = await _httpClient.GetStreamAsync("api/genres");
+            var stream = await _httpClient.GetStreamAsync(Endpoint);
             var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
             var genres = await JsonSerializer.DeserializeAsync<IEnumerable<GenreResponseDto>>(stream, options);
             return genres!;

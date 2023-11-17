@@ -13,22 +13,19 @@ namespace Library.Blazor.Services.BookService
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<BookResponseDto>> GetBooksAsync()
-        {
-            const string apiUrl = $"{Endpoint}";
-            var stream = await _httpClient.GetStreamAsync(apiUrl);
-            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
-            var books = await JsonSerializer.DeserializeAsync<IEnumerable<BookResponseDto>>(stream, options);
-            return books!;
-        }
-
-        public async Task<IEnumerable<BookResponseDto>> GetBooksAsync(List<int>? genreIds)
+        public async Task<IEnumerable<BookResponseDto>> GetBooksAsync(List<int>? genreIds, List<int>? languageIds)
         {
             var queryString = string.Empty;
             if (genreIds is not null)
             {
-                queryString += string.Join("&", genreIds.Select(id => $"genreIds={id}"));
+                queryString += string.Join("&", genreIds.Select(id => $"genreIds={id}")) + "&";
             }
+
+            if (languageIds is not null)
+            {
+                queryString += string.Join("&", languageIds.Select(id => $"languageIds={id}")) + "&";
+            }
+
             var apiUrl = $"{Endpoint}?{queryString}";
             var stream = await _httpClient.GetStreamAsync(apiUrl);
             var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };

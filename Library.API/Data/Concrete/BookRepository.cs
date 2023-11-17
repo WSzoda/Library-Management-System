@@ -35,7 +35,7 @@ namespace Biblioteka.Data.Concrete
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooks(List<int>? genreIdsFilter = null)
+        public async Task<IEnumerable<Book>> GetAllBooks(List<int>? genreIdsFilter = null, List<int>? languageIdsFilter = null)
         {
             var query = _context.Books
                 .AsNoTracking()
@@ -50,6 +50,11 @@ namespace Biblioteka.Data.Concrete
             if (genreIdsFilter is not null && genreIdsFilter.Any())
             {
                 query = query.Where(b => genreIdsFilter.Contains(b.GenreId));
+            }
+
+            if (languageIdsFilter is not null && languageIdsFilter.Any())
+            {
+                query = query.Where(b => languageIdsFilter.Contains(b.LanguageId));
             }
 
             var books = await query.ToListAsync();
