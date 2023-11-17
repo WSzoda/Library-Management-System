@@ -1,0 +1,52 @@
+﻿<div class="container mt-4">
+    <h3>Create New Book</h3>
+    <form @onsubmit="CreateBook">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" @bind="bookCreateDto.Title" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="year" class="form-label">Year of Publishing</label>
+            <input type="number" class="form-control" id="year" @bind="bookCreateDto.YearOfPublishing" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="pages" class="form-label">Number of Pages</label>
+            <input type="number" class="form-control" id="pages" @bind="bookCreateDto.NumberOfPages" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" @bind="bookCreateDto.Description" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN</label>
+            <input type="text" class="form-control" id="isbn" @bind="bookCreateDto.ISBN" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" id="image"/>
+            @if (!string.IsNullOrEmpty(bookCreateDto.Image))
+            {
+                <img src="@bookCreateDto.Image" alt="Book Image" class="mt-2" style="max-width: 100%" />
+            }
+        </div>
+
+        <!-- Add other form fields for LanguageId, GenreId, PublisherId, AuthorsIds, etc. -->
+
+        <button type="submit" class="btn btn-primary">Create Book</button>
+    </form>
+</div>
+
+@code {
+    private BookCreateDto bookCreateDto = new BookCreateDto();
+
+    private void CreateBook()
+    {
+
+    }
+
+}

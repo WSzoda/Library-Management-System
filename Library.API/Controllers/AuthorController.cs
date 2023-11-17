@@ -24,6 +24,7 @@ namespace Biblioteka.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AuthorResponseDto>>> GetAuthors()
         {
+            _logger.LogInformation("Getting all authors");
             var authors = await _authorRepository.GetAllAuthors();
             var authorsDto = _mapper.Map<List<AuthorResponseDto>>(authors);
             return Ok(authorsDto);
@@ -34,12 +35,14 @@ namespace Biblioteka.Controllers
         {
             try
             {
+                _logger.LogInformation($"Getting author with id {id}");
                 var author = await _authorRepository.GetAuthorById(id);
                 var authorDto = _mapper.Map<AuthorResponseDto>(author);
                 return Ok(authorDto);
             }
             catch (ArgumentNullException)
             {
+                _logger.LogError($"Author with id {id} was not found.");
                 return NotFound();
             }
         }
@@ -49,6 +52,7 @@ namespace Biblioteka.Controllers
         {
             try
             {
+                _logger.LogInformation("Adding author");
                 await _authorRepository.AddAuthor(author);
                 return CreatedAtAction(nameof(GetAuthorById), new { id = author.Id }, author);
             }
@@ -61,11 +65,6 @@ namespace Biblioteka.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAuthor(int id, Author author)
         {
-            if(author is null)
-            {
-                _logger.LogError("Author is null");
-                return BadRequest("Author is null");
-            }
             if (id != author.Id)
             {
                 _logger.LogError("Mismatching Ids.");

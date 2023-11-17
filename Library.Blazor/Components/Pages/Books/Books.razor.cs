@@ -5,7 +5,7 @@ using Library.Domain;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
 
-namespace Library.Blazor.Components.Pages
+namespace Library.Blazor.Components.Pages.Books
 {
     public partial class Books
     {
