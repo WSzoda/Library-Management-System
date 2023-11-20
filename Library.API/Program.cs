@@ -35,7 +35,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddJsonOptions(
             options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
         );
-builder.Services.AddDbContext<LibraryDbContext>(options => {options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));});
+builder.Services.AddDbContext<LibraryDbContext>(options => {options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));});
 builder.Host.UseSerilog();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -47,7 +47,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
     app.UseWebAssemblyDebugging();
 }
 

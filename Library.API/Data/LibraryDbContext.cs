@@ -19,13 +19,14 @@ namespace Biblioteka.Data
         public DbSet<Rental> Rentals { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Book>().HasOne(b => b.Genre).WithMany(g => g.Books).HasForeignKey(b => b.GenreId);
             modelBuilder.Entity<Book>().HasOne(b => b.Publisher).WithMany(p => p.Books).HasForeignKey(b => b.PublisherId);
             modelBuilder.Entity<Book>().HasOne(b => b.Language).WithMany(l => l.Books).HasForeignKey(b => b.LanguageId);
             modelBuilder.Entity<AuthorBook>().HasKey(ab => new { ab.AuthorId, ab.BookId });
-            modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Author).WithMany(a => a.AuthorBooks).HasForeignKey(ab => ab.AuthorId);
-            modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Book).WithMany(b => b.BookAuthors).HasForeignKey(ab => ab.BookId);
-            
+            modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Author).WithMany(a => a.AuthorBooks).HasForeignKey(ab => ab.AuthorId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Book).WithMany(b => b.BookAuthors).HasForeignKey(ab => ab.BookId).OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<Review>().HasOne(r => r.Book).WithMany(b => b.Reviews).HasForeignKey(r => r.BookId);
             modelBuilder.Entity<Review>().HasOne(r => r.Customer).WithMany(r => r.Reviews).HasForeignKey(r => r.CustomerId);
             modelBuilder.Entity<Rental>().HasOne(r => r.Book).WithMany(b => b.Rentals).HasForeignKey(r => r.BookId);
