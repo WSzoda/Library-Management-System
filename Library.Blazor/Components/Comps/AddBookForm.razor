@@ -3,35 +3,35 @@
     <form @onsubmit="CreateBook">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" @bind="bookCreateDto.Title" required />
+            <input type="text" class="form-control" id="title" @bind="_bookCreateDto.Title" required />
         </div>
 
         <div class="mb-3">
             <label for="year" class="form-label">Year of Publishing</label>
-            <input type="number" class="form-control" id="year" @bind="bookCreateDto.YearOfPublishing" required />
+            <input type="number" class="form-control" id="year" @bind="_bookCreateDto.YearOfPublishing" required />
         </div>
 
         <div class="mb-3">
             <label for="pages" class="form-label">Number of Pages</label>
-            <input type="number" class="form-control" id="pages" @bind="bookCreateDto.NumberOfPages" required />
+            <input type="number" class="form-control" id="pages" @bind="_bookCreateDto.NumberOfPages" required />
         </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" @bind="bookCreateDto.Description" required></textarea>
+            <textarea class="form-control" id="description" @bind="_bookCreateDto.Description" required></textarea>
         </div>
 
         <div class="mb-3">
             <label for="isbn" class="form-label">ISBN</label>
-            <input type="text" class="form-control" id="isbn" @bind="bookCreateDto.ISBN" required />
+            <input type="text" class="form-control" id="isbn" @bind="_bookCreateDto.ISBN" required />
         </div>
 
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>
             <input type="file" class="form-control" id="image"/>
-            @if (!string.IsNullOrEmpty(bookCreateDto.Image))
+            @if (!string.IsNullOrEmpty(_bookCreateDto.Image))
             {
-                <img src="@bookCreateDto.Image" alt="Book Image" class="mt-2" style="max-width: 100%" />
+                <img src="@_bookCreateDto.Image" alt="Book Image" class="mt-2" style="max-width: 100%" />
             }
         </div>
         
@@ -50,13 +50,13 @@
         <div class="mb-3">
             <label for="genre" class="form-label">Genre</label>
             <div>
-                <RadzenDropDownDataGrid id="genre" @bind-Value="@SelectedAuthor" Data="@GenresList.Select(g => g.Name)" TValue="string" />
+                <RadzenDropDownDataGrid id="genre" @bind-Value="@SelectedGenre" Data="@GenresList.Select(g => g.Name)" TValue="string" />
             </div>
         </div>
         <div class="mb-3">
             <label for="publisher" class="form-label">Publisher</label>
             <div>
-                <RadzenDropDownDataGrid id="publisher" @bind-Value="@SelectedAuthor" Data=@AuthorsList.Select(a => (a.Name + " " + a.Surname)) TValue="string" />
+                <RadzenDropDownDataGrid id="publisher" @bind-Value="@SelectedPublisher" Data=@PublishersList.Select(p => p.Name) TValue="string" />
             </div>
         </div>
 
