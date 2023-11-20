@@ -1,4 +1,5 @@
-﻿using Library.DTOs;
+﻿using System.Text.Json;
+using Library.DTOs;
 
 namespace Library.Blazor.Services.AuthorService
 {
@@ -13,14 +14,21 @@ namespace Library.Blazor.Services.AuthorService
         }
 
 
-        public Task<IEnumerable<AuthorResponseDto>> GetAuthorsAsync()
+        public async Task<IEnumerable<AuthorResponseDto>> GetAuthorsAsync()
         {
-            throw new NotImplementedException();
+            var stream = await _httpClient.GetStreamAsync(Endpoint);
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var authors = await JsonSerializer.DeserializeAsync<IEnumerable<AuthorResponseDto>>(stream, options);
+            return authors!;
         }
 
-        public Task<AuthorResponseDto> GetAuthorByIdAsync(int id)
+        public async Task<AuthorResponseDto> GetAuthorByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var apiUrl = $"{Endpoint}/{id}";
+            var stream = await _httpClient.GetStreamAsync(apiUrl);
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var author = await JsonSerializer.DeserializeAsync<AuthorResponseDto>(stream, options);
+            return author!;
         }
     }
 }

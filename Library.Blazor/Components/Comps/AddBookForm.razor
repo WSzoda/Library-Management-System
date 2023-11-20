@@ -34,19 +34,35 @@
                 <img src="@bookCreateDto.Image" alt="Book Image" class="mt-2" style="max-width: 100%" />
             }
         </div>
+        
+        <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <div>
+                <RadzenDropDownDataGrid id="author" @bind-Value="@SelectedAuthor" Data="@AuthorsList.Select(a => (a.Name + " " + a.Surname))" TValue="string" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="language" class="form-label">Language</label>
+            <div>
+                <RadzenDropDownDataGrid id="language" @bind-Value="@SelectedLanguage" Data="@LanguagesList.Select(l => l.LanguageName)" TValue="string" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="genre" class="form-label">Genre</label>
+            <div>
+                <RadzenDropDownDataGrid id="genre" @bind-Value="@SelectedAuthor" Data="@GenresList.Select(g => g.Name)" TValue="string" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="publisher" class="form-label">Publisher</label>
+            <div>
+                <RadzenDropDownDataGrid id="publisher" @bind-Value="@SelectedAuthor" Data=@AuthorsList.Select(a => (a.Name + " " + a.Surname)) TValue="string" />
+            </div>
+        </div>
+
 
         <!-- Add other form fields for LanguageId, GenreId, PublisherId, AuthorsIds, etc. -->
 
         <button type="submit" class="btn btn-primary">Create Book</button>
     </form>
 </div>
-
-@code {
-    private BookCreateDto bookCreateDto = new BookCreateDto();
-
-    private void CreateBook()
-    {
-
-    }
-
-}
