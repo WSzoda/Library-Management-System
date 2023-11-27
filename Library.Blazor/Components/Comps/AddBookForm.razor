@@ -28,11 +28,7 @@
 
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>
-            <input type="file" class="form-control" id="image"/>
-            @if (!string.IsNullOrEmpty(_bookCreateDto.Image))
-            {
-                <img src="@_bookCreateDto.Image" alt="Book Image" class="mt-2" style="max-width: 100%" />
-            }
+            <InputFile id="image" class="form-control" OnChange="HandleFileUpload" />
         </div>
         
         <div class="mb-3">
@@ -59,10 +55,6 @@
                 <RadzenDropDownDataGrid id="publisher" @bind-Value="@SelectedPublisher" Data=@PublishersList.Select(p => p.Name) TValue="string" />
             </div>
         </div>
-
-
-        <!-- Add other form fields for LanguageId, GenreId, PublisherId, AuthorsIds, etc. -->
-
         <button type="submit" class="btn btn-primary">Create Book</button>
     </form>
 </div>

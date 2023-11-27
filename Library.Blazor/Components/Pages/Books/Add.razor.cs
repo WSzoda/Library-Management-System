@@ -1,4 +1,4 @@
-﻿namespace Library.Blazor.Components.Pages.Books
+﻿namespace Library.Blazor.Components.Pages.Books.Books
 {
     public partial class Add
     {

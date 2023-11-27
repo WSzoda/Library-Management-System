@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Library.Blazor.Components.Pages.Books
 {
-    public partial class Books
+    public partial class Home
     {
         [Inject]
         private IBooksService BooksService { get; set; }
@@ -45,7 +45,7 @@ namespace Library.Blazor.Components.Pages.Books
         }
 
         private async Task Filter()
-        { 
+        {
             BooksList = await BooksService.GetBooksAsync(SelectedGenresIds.ToList(), SelectedLanguagesIds.ToList());
         }
     }

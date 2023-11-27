@@ -15,10 +15,26 @@ namespace Biblioteka.Data
         public DbSet<Author> Authors { get; set; }
         public DbSet<Worker> Workers { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<User>()
+                .ToTable("Users");
+
+            modelBuilder.Entity<Customer>()
+                .ToTable("Customers")
+                .HasOne(c => c.User)
+                .WithOne(u => u.Customer)
+                .HasForeignKey<Customer>(c => c.UserId);
+
+            modelBuilder.Entity<Worker>()
+                .ToTable("Workers")
+                .HasOne(w => w.User)
+                .WithOne(u => u.Worker)
+                .HasForeignKey<Worker>(w => w.UserId);
 
             modelBuilder.Entity<Book>().HasOne(b => b.Genre).WithMany(g => g.Books).HasForeignKey(b => b.GenreId);
             modelBuilder.Entity<Book>().HasOne(b => b.Publisher).WithMany(p => p.Books).HasForeignKey(b => b.PublisherId);
@@ -48,12 +64,7 @@ namespace Biblioteka.Data
                 new Genre { Id = 3, Name = "Horror" },
                 new Genre { Id = 4, Name = "Romance" }
             );
-            
-            modelBuilder.Entity<Worker>().HasData(
-                new Worker{ Id = 1, Name = "Wojtek", Surname = "Szoda", Email = "test@wp.pl", Role = "Admin"},
-                new Worker{ Id = 2, Name = "Jan", Surname = "Kowalski", Email = "kowalski@test.pl", Role = "Worker"},
-                new Worker{ Id = 3, Name = "Adam", Surname = "Nowak", Email = "adam@nowak.pl", Role = "Worker"}
-            );
+
             
             modelBuilder.Entity<Country>().HasData(
                 new Country { Id = 1, Name = "Poland" },
@@ -89,12 +100,8 @@ namespace Biblioteka.Data
                 new Publisher { Id = 2, Name = "Wydawnictwo Literackie", CountryId = 1 },
                 new Publisher { Id = 3, Name = "Penguin Books", CountryId = 2 }
             );
-            
-            modelBuilder.Entity<Customer>().HasData(
-                new Customer { Id = 1, Name = "Jan", Surname = "Kowalski", Email = "kowlski@jan.pl", PhoneNumber = "123456789", Address = "ul. Kowalska 1, 00-000 Warszawa" },
-                new Customer { Id = 2, Name = "Adam", Surname = "Nowak", Email = "adam@nowak.pl", PhoneNumber = "987654321", Address = "ul. Nowaka 1, 00-000 Warszawa" },
-                new Customer { Id = 3, Name = "Kamil", Surname = "Nowacki", Email = "kamil@nowacki.pl", PhoneNumber = "123123123", Address = "ul. Nowacki 1, 00-000 Warszawa" }
-            );
+
+
             
             modelBuilder.Entity<Book>().HasData(
                 new Book

@@ -4,6 +4,8 @@ using Biblioteka.Data.Abstract;
 using Biblioteka.Data.Concrete;
 using Library.API.Data.Abstract;
 using Library.API.Data.Concrete;
+using Library.API.Services.Abstract;
+using Library.API.Services.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -27,6 +29,7 @@ builder.Services.AddScoped<IAuthorBookRepository, AuthorBookRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<ILanguageRepository, LanguageRepository>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 
 
@@ -35,7 +38,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddJsonOptions(
             options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
         );
-builder.Services.AddDbContext<LibraryDbContext>(options => {options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));});
+builder.Services.AddDbContext<LibraryDbContext>(options => {options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));});
 builder.Host.UseSerilog();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

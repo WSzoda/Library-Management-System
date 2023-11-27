@@ -37,7 +37,8 @@ namespace Library.API.Controllers
             }   
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet]
+        [Route("{id}")]
         public async Task<ActionResult<PublisherResponseDto>> GetPublisherById(int id)
         {
             _logger.LogInformation($"Getting publisher with id: {id}");

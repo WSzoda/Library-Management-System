@@ -1,5 +1,6 @@
 using AutoMapper;
 using Biblioteka.Data.Abstract;
+using Library.API.Services.Abstract;
 using Library.Domain;
 using Library.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,15 @@ namespace Biblioteka.Controllers
         private readonly IAuthorBookRepository _authorBookRepository;
         private readonly ILogger<BookController> _logger;
         private readonly IMapper _mapper;
+        private readonly IFileService _fileService;
 
-        public BookController(IBookRepository booksRepository, ILogger<BookController> logger, IMapper mapper, IAuthorBookRepository authorBookRepository)
+        public BookController(IBookRepository booksRepository, ILogger<BookController> logger, IMapper mapper, IAuthorBookRepository authorBookRepository, IFileService fileService)
         {
             _booksRepository = booksRepository;
             _logger = logger;
             _mapper = mapper;
             _authorBookRepository = authorBookRepository;
+            _fileService = fileService;
         }
 
         [HttpGet]
@@ -128,6 +131,7 @@ namespace Biblioteka.Controllers
             {
                 _logger.LogInformation("Creating book");
                 Book bookCreated = _mapper.Map<Book>(book);
+                var image = _fileService.SaveImage(book.Image);
                 _booksRepository.AddBook(bookCreated);
                 List<AuthorBook> authorBooks = new();
                 if(bookCreated.BookAuthors is not null)

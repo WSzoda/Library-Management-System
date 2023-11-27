@@ -16,5 +16,11 @@ namespace Library.Domain
         public string Surname { get; set; } = string.Empty;
         [Required]
         public string Email { get; set; } = string.Empty;
+
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
+
+        public int WorkerId { get; set; }
+        public Worker Worker { get; set; }
     }
 }

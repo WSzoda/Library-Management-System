@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using Library.DTOs;
 
 namespace Library.Blazor.Services.BookService
@@ -39,6 +40,16 @@ namespace Library.Blazor.Services.BookService
             var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
             var book = await JsonSerializer.DeserializeAsync<BookResponseDto>(stream, options);
             return book!;
+        }
+
+        public async Task<BookResponseDto> CreateBookAsync(BookCreateDto book)
+        {
+            var bookJson = new StringContent(JsonSerializer.Serialize(book), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(Endpoint, bookJson);
+            var stream = await response.Content.ReadAsStreamAsync();
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var createdBook = await JsonSerializer.DeserializeAsync<BookResponseDto>(stream, options);
+            return createdBook!;
         }
     }
 }

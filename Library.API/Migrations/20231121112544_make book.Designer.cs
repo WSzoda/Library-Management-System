@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Biblioteka.Migrations
+namespace Library.API.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20231120101251_added user table")]
-    partial class addedusertable
+    [Migration("20231121112544_make book")]
+    partial class makebook
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -400,54 +400,19 @@ namespace Biblioteka.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "ul. Kowalska 1, 00-000 Warszawa",
-                            Email = "kowlski@jan.pl",
-                            Name = "Jan",
-                            PhoneNumber = "123456789",
-                            Surname = "Kowalski"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "ul. Nowaka 1, 00-000 Warszawa",
-                            Email = "adam@nowak.pl",
-                            Name = "Adam",
-                            PhoneNumber = "987654321",
-                            Surname = "Nowak"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Address = "ul. Nowacki 1, 00-000 Warszawa",
-                            Email = "kamil@nowacki.pl",
-                            Name = "Kamil",
-                            PhoneNumber = "123123123",
-                            Surname = "Nowacki"
-                        });
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("Library.Domain.Genre", b =>
@@ -628,10 +593,13 @@ namespace Biblioteka.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("Library.Domain.Worker", b =>
+            modelBuilder.Entity("Library.Domain.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CustomerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
@@ -642,43 +610,37 @@ namespace Biblioteka.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("WorkerId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Workers");
+                    b.ToTable("Users", (string)null);
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "test@wp.pl",
-                            Name = "Wojtek",
-                            Role = "Admin",
-                            Surname = "Szoda"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "kowalski@test.pl",
-                            Name = "Jan",
-                            Role = "Worker",
-                            Surname = "Kowalski"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Email = "adam@nowak.pl",
-                            Name = "Adam",
-                            Role = "Worker",
-                            Surname = "Nowak"
-                        });
+            modelBuilder.Entity("Library.Domain.Worker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Workers", (string)null);
                 });
 
             modelBuilder.Entity("Library.Domain.Author", b =>
@@ -697,13 +659,13 @@ namespace Biblioteka.Migrations
                     b.HasOne("Library.Domain.Author", "Author")
                         .WithMany("AuthorBooks")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Library.Domain.Book", "Book")
                         .WithMany("BookAuthors")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -736,6 +698,17 @@ namespace Biblioteka.Migrations
                     b.Navigation("Language");
 
                     b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("Library.Domain.Customer", b =>
+                {
+                    b.HasOne("Library.Domain.User", "User")
+                        .WithOne("Customer")
+                        .HasForeignKey("Library.Domain.Customer", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Library.Domain.Publisher", b =>
@@ -787,6 +760,17 @@ namespace Biblioteka.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("Library.Domain.Worker", b =>
+                {
+                    b.HasOne("Library.Domain.User", "User")
+                        .WithOne("Worker")
+                        .HasForeignKey("Library.Domain.Worker", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Library.Domain.Author", b =>
                 {
                     b.Navigation("AuthorBooks");
@@ -828,6 +812,15 @@ namespace Biblioteka.Migrations
             modelBuilder.Entity("Library.Domain.Publisher", b =>
                 {
                     b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Library.Domain.User", b =>
+                {
+                    b.Navigation("Customer")
+                        .IsRequired();
+
+                    b.Navigation("Worker")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
