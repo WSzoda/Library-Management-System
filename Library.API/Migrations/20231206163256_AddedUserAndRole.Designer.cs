@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.API.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20231121112544_make book")]
-    partial class makebook
+    [Migration("20231206163256_AddedUserAndRole")]
+    partial class AddedUserAndRole
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -409,10 +409,9 @@ namespace Library.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("Library.Domain.Genre", b =>
@@ -593,13 +592,25 @@ namespace Library.API.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("Library.Domain.User", b =>
+            modelBuilder.Entity("Library.Domain.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Library.Domain.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
@@ -610,37 +621,22 @@ namespace Library.API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("WorkerId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
-                });
+                    b.HasIndex("RoleId");
 
-            modelBuilder.Entity("Library.Domain.Worker", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Workers", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Library.Domain.Author", b =>
@@ -703,8 +699,8 @@ namespace Library.API.Migrations
             modelBuilder.Entity("Library.Domain.Customer", b =>
                 {
                     b.HasOne("Library.Domain.User", "User")
-                        .WithOne("Customer")
-                        .HasForeignKey("Library.Domain.Customer", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -760,15 +756,15 @@ namespace Library.API.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("Library.Domain.Worker", b =>
+            modelBuilder.Entity("Library.Domain.User", b =>
                 {
-                    b.HasOne("Library.Domain.User", "User")
-                        .WithOne("Worker")
-                        .HasForeignKey("Library.Domain.Worker", "UserId")
+                    b.HasOne("Library.Domain.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Library.Domain.Author", b =>
@@ -812,15 +808,6 @@ namespace Library.API.Migrations
             modelBuilder.Entity("Library.Domain.Publisher", b =>
                 {
                     b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("Library.Domain.User", b =>
-                {
-                    b.Navigation("Customer")
-                        .IsRequired();
-
-                    b.Navigation("Worker")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

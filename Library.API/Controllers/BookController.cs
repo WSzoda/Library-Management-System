@@ -131,7 +131,7 @@ namespace Biblioteka.Controllers
             {
                 _logger.LogInformation("Creating book");
                 Book bookCreated = _mapper.Map<Book>(book);
-                var image = _fileService.SaveImage(book.Image);
+                //var image = _fileService.SaveImage(book.Image);
                 _booksRepository.AddBook(bookCreated);
                 List<AuthorBook> authorBooks = new();
                 if(bookCreated.BookAuthors is not null)

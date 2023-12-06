@@ -7,7 +7,7 @@
 namespace Library.API.Migrations
 {
     /// <inheritdoc />
-    public partial class makebook : Migration
+    public partial class AddedUserAndRole : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,20 +52,16 @@ namespace Library.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Roles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Surname = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
-                    CustomerId = table.Column<int>(type: "INTEGER", nullable: false),
-                    WorkerId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,42 +107,24 @@ namespace Library.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: false),
-                    Address = table.Column<string>(type: "TEXT", nullable: false),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Surname = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
+                    RoleId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Workers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Role = table.Column<string>(type: "TEXT", nullable: false),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Workers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Workers_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -186,6 +164,27 @@ namespace Library.API.Migrations
                         name: "FK_Books_Publishers_PublisherId",
                         column: x => x.PublisherId,
                         principalTable: "Publishers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    Address = table.Column<string>(type: "TEXT", nullable: false),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Customer_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -233,9 +232,9 @@ namespace Library.API.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Rentals_Customers_CustomerId",
+                        name: "FK_Rentals_Customer_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customers",
+                        principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -261,9 +260,9 @@ namespace Library.API.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reviews_Customers_CustomerId",
+                        name: "FK_Reviews_Customer_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customers",
+                        principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -389,10 +388,9 @@ namespace Library.API.Migrations
                 column: "PublisherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_UserId",
-                table: "Customers",
-                column: "UserId",
-                unique: true);
+                name: "IX_Customer_UserId",
+                table: "Customer",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Publishers_CountryId",
@@ -420,10 +418,9 @@ namespace Library.API.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Workers_UserId",
-                table: "Workers",
-                column: "UserId",
-                unique: true);
+                name: "IX_Users_RoleId",
+                table: "Users",
+                column: "RoleId");
         }
 
         /// <inheritdoc />
@@ -439,16 +436,13 @@ namespace Library.API.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
-                name: "Workers");
-
-            migrationBuilder.DropTable(
                 name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "Books");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Customer");
 
             migrationBuilder.DropTable(
                 name: "Genres");
@@ -464,6 +458,9 @@ namespace Library.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

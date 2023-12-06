@@ -13,28 +13,34 @@ namespace Biblioteka.Data
         public DbSet<AuthorBook> AuthorBooks { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Author> Authors { get; set; }
-        public DbSet<Worker> Workers { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        //public DbSet<Worker> Workers { get; set; }
+        //public DbSet<Customer> Customers { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<User>()
-                .ToTable("Users");
+            //modelBuilder.Entity<User>()
+            //    .ToTable("Users");
 
-            modelBuilder.Entity<Customer>()
-                .ToTable("Customers")
-                .HasOne(c => c.User)
-                .WithOne(u => u.Customer)
-                .HasForeignKey<Customer>(c => c.UserId);
+            //modelBuilder.Entity<Customer>()
+            //    .ToTable("Customers")
+            //    .HasOne(c => c.User)
+            //    .WithOne(u => u.Customer)
+            //    .HasForeignKey<Customer>(c => c.UserId);
 
-            modelBuilder.Entity<Worker>()
-                .ToTable("Workers")
-                .HasOne(w => w.User)
-                .WithOne(u => u.Worker)
-                .HasForeignKey<Worker>(w => w.UserId);
+            //modelBuilder.Entity<Worker>()
+            //    .ToTable("Workers")
+            //    .HasOne(w => w.User)
+            //    .WithOne(u => u.Worker)
+            //    .HasForeignKey<Worker>(w => w.UserId);
+
+            modelBuilder.Entity<Role>().HasData(
+                new Role { Id = 1, Name = "User" },
+                new Role { Id = 2, Name = "Worker" },
+                new Role { Id = 3, Name = "Admin" });
 
             modelBuilder.Entity<Book>().HasOne(b => b.Genre).WithMany(g => g.Books).HasForeignKey(b => b.GenreId);
             modelBuilder.Entity<Book>().HasOne(b => b.Publisher).WithMany(p => p.Books).HasForeignKey(b => b.PublisherId);
