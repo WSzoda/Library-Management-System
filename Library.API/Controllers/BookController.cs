@@ -114,7 +114,7 @@ namespace Biblioteka.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBook(BookCreateDto book)
+        public async Task<ActionResult> CreateBook(BookCreateDto book)
         {
             if(book is null)
             {
@@ -132,7 +132,7 @@ namespace Biblioteka.Controllers
                 _logger.LogInformation("Creating book");
                 Book bookCreated = _mapper.Map<Book>(book);
                 //var image = _fileService.SaveImage(book.Image);
-                _booksRepository.AddBook(bookCreated);
+                await _booksRepository.AddBook(bookCreated);
                 List<AuthorBook> authorBooks = new();
                 if(bookCreated.BookAuthors is not null)
                 {
@@ -141,7 +141,7 @@ namespace Biblioteka.Controllers
                         authorBooks.Add(new AuthorBook { AuthorId = authorId, BookId = bookCreated.Id });
                     }
                 }
-                _authorBookRepository.AddAuthorBooks(authorBooks);
+                await _authorBookRepository.AddAuthorBooks(authorBooks);
                 _logger.LogInformation(bookCreated.Id.ToString());
                 return Ok(bookCreated);
             }

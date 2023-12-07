@@ -11,7 +11,7 @@ namespace Library.DTOs
         public int NumberOfPages { get; set; }
         public string Description { get; set; } = string.Empty;
         public string ISBN { get; set; } = string.Empty;
-        public byte[] Image { get; set; }
+        public string Image { get; set; } = string.Empty;
         public int LanguageId { get; set; }
         public int GenreId { get; set; }
         public int PublisherId { get; set; }

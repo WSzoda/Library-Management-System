@@ -50,7 +50,7 @@ namespace Library.Blazor.Components.Comps
                 NumberOfPages = _bookCreateDto.NumberOfPages,
                 Description = _bookCreateDto.Description,
                 ISBN = _bookCreateDto.ISBN,
-                Image = _bookCreateDto.Image,
+                Image = "Brak",
                 LanguageId = LanguagesList.FirstOrDefault(l => l.LanguageName == SelectedLanguage)!.Id,
                 GenreId = GenresList.FirstOrDefault(g => g.Name == SelectedGenre)!.Id,
                 PublisherId = PublishersList.FirstOrDefault(p => p.Name == SelectedPublisher)!.Id,
