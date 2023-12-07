@@ -21,5 +21,19 @@ namespace Library.API.Controllers
             _accountService.RegisterUser(dto);
             return Ok();
         }
+
+        [HttpPost("login")]
+        public ActionResult Login([FromBody] LoginDto dto)
+        {
+            try
+            {
+                string token = _accountService.GenerateJwt(dto);
+                return Ok(token);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

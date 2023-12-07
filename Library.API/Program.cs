@@ -1,9 +1,11 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using Biblioteka.Data;
 using Biblioteka.Data.Abstract;
 using Biblioteka.Data.Concrete;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Library.API;
 using Library.API.Data.Abstract;
 using Library.API.Data.Concrete;
 using Library.API.Services.Abstract;
@@ -13,11 +15,32 @@ using Library.DTOs;
 using Library.DTOs.Validators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+var authenticationSettings = new AuthenticationSettings();
+builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
+
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = "Bearer";
+    option.DefaultScheme = "Bearer";
+    option.DefaultChallengeScheme = "Bearer";
+}).AddJwtBearer(cfg =>
+{
+    cfg.RequireHttpsMetadata = false;
+    cfg.SaveToken = true;
+    cfg.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = authenticationSettings.JwtIssuer,
+        ValidAudience = authenticationSettings.JwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
+    };
+});
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
@@ -39,6 +62,7 @@ builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+builder.Services.AddSingleton(authenticationSettings);
 
 
 
@@ -65,6 +89,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseBlazorFrameworkFiles();
+
+app.UseAuthentication();
 
 app.UseHttpsRedirection();
 

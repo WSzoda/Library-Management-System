@@ -17,9 +17,10 @@ namespace Library.Domain
         public string Surname { get; set; } = string.Empty;
         [Required]
         public string Email { get; set; } = string.Empty;
-        public string PasswordHash { get; set; }
+
+        public string PasswordHash { get; set; } = string.Empty;
         public int RoleId { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual Role Role { get; set; } = null!;
 
     }
 }
