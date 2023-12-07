@@ -2,11 +2,15 @@ using System.Text.Json.Serialization;
 using Biblioteka.Data;
 using Biblioteka.Data.Abstract;
 using Biblioteka.Data.Concrete;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Library.API.Data.Abstract;
 using Library.API.Data.Concrete;
 using Library.API.Services.Abstract;
 using Library.API.Services.Concrete;
 using Library.Domain;
+using Library.DTOs;
+using Library.DTOs.Validators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -34,9 +38,12 @@ builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 
 
 
+
+builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddJsonOptions(
