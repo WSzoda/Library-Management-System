@@ -32,7 +32,7 @@ namespace Library.API.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return Unauthorized(ex.Message);
             }
         }
     }

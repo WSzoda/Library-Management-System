@@ -22,5 +22,7 @@ builder.Services.AddHttpClient<IAuthorService, AuthorService>(
     client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 builder.Services.AddHttpClient<IPublisherService, PublisherService>(
     client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+builder.Services.AddHttpClient<IAuthService, AuthService>(
+    client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 
 await builder.Build().RunAsync();
