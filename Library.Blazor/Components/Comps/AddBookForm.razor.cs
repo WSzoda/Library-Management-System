@@ -81,9 +81,15 @@ namespace Library.Blazor.Components.Comps
 
         private void AddNewLanguage(LanguageResponseDto language)
         {
-            Console.WriteLine("added new language " + language.LanguageName);
             LanguagesList = LanguagesList.Append(language);
             SelectedLanguage = language.LanguageName;
+            StateHasChanged();
+        }
+        
+        private void AddNewGenre(GenreResponseDto genre)
+        {
+            GenresList = GenresList.Append(genre);
+            SelectedGenre = genre.Name;
             StateHasChanged();
         }
     }

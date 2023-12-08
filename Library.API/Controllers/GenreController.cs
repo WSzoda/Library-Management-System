@@ -52,9 +52,11 @@ namespace Library.API.Controllers
         {
             try
             {
-                _logger.LogInformation($"Adding genre: {genre}");
-                await _genreRepository.AddGenre(_mapper.Map<Genre>(genre));
-                return Ok();
+                _logger.LogInformation($"Adding genre: {genre.Name}");
+                var genreEntity = _mapper.Map<Genre>(genre);
+                await _genreRepository.AddGenre(genreEntity);
+                var genreDto = _mapper.Map<GenreResponseDto>(genreEntity);
+                return CreatedAtAction(nameof(GetGenre), new { id = genreEntity.Id }, genreDto);
             }
             catch (Exception)
             {

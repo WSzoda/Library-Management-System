@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Library.Blazor.Components.Comps;
 
-partial class AddLanguageForm
+partial class AddLanguageModal
 {
     [Parameter]
     public Action<LanguageResponseDto>? OnLanguageAdded { get; set; }
