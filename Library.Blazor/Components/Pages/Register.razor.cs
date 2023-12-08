@@ -32,7 +32,7 @@ partial class Register
 
         var response = await authService.Register(newUser);
 
-        if(response.IsCompletedSuccessfully)
+        if(response.IsSuccessStatusCode)
         {
             navigationManager.NavigateTo("/login");
         }

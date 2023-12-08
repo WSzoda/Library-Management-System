@@ -37,6 +37,10 @@ public class AuthService : IAuthService
         var response = await _httpClient.PostAsync($"{Endpoint}/register", userJson);
 
         return response;
-
+    }
+    
+    public async Task Logout()
+    {
+        await _localStorage.RemoveItemAsync("token");
     }
 }
