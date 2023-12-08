@@ -36,6 +36,7 @@
             <div>
                 <RadzenDropDownDataGrid id="author" @bind-Value="@SelectedAuthor" Data="@AuthorsList.Select(a => (a.Name + " " + a.Surname))" TValue="string" />
             </div>
+            <AddLanguageForm/>
         </div>
         <div class="mb-3">
             <label for="language" class="form-label">Language</label>

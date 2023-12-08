@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using Library.DTOs;
 
@@ -20,6 +21,13 @@ namespace Library.Blazor.Services.LanguageService
             var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
             var languages = await JsonSerializer.DeserializeAsync<IEnumerable<LanguageResponseDto>>(stream, options);
             return languages!;
+        }
+        
+        public async Task AddLanguageAsync(LanguageCreateDto language)
+        {
+            var languageJson = new StringContent(JsonSerializer.Serialize(language), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(Endpoint, languageJson);
+            response.EnsureSuccessStatusCode();
         }
     }
 }

@@ -1,0 +1,32 @@
+﻿@if (_isOpen)
+{
+    <div class="modal" tabindex="-1" role="dialog" id="addLanguageModal" style="display: block">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Language</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="CloseModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body my-3">
+                    <form @onsubmit="HandleSubmit">
+                        <div class="form-group">
+                            <label for="inputLanguageName">Language Name</label>
+                            <input type="text" class="form-control" id="inputLanguageName" placeholder="Enter language name" @bind="_languageName" />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Add Language</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CloseModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLanguageModal" @onclick="OpenModal">
+    Add Language
+</button>
+

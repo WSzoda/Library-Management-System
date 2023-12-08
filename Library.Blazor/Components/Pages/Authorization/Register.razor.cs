@@ -2,7 +2,7 @@
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
 
-namespace Library.Blazor.Components.Pages;
+namespace Library.Blazor.Components.Pages.Authorization;
 
 partial class Register
 {

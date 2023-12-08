@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Library.API.Data.Abstract;
+using Library.Domain;
 using Library.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,15 @@ namespace Library.API.Controllers
             var languages = await _languageRepository.GetAllLanguages();
             var languagesDto = _mapper.Map<List<LanguageResponseDto>>(languages);
             return Ok(languagesDto);
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> AddLanguage(LanguageCreateDto language)
+        {
+            _logger.LogInformation("Adding a new language");
+            var languageEntity = _mapper.Map<Language>(language);
+            await _languageRepository.AddLanguage(languageEntity);
+            return CreatedAtAction(nameof(GetLanguages), new { id = languageEntity.Id }, languageEntity);
         }
     }
 }

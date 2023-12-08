@@ -9,6 +9,7 @@ namespace Biblioteka.Profiles
         public LanguageProfile()
         {
             CreateMap<Language, LanguageResponseDto>();
+            CreateMap<LanguageCreateDto, Language>();
         }
     }
 }
