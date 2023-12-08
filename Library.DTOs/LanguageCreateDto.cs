@@ -2,5 +2,5 @@
 
 public class LanguageCreateDto
 {
-    public string Name { get; set; } = default!;
+    public string LanguageName { get; set; } = default!;
 }

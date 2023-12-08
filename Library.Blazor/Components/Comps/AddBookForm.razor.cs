@@ -11,6 +11,7 @@ namespace Library.Blazor.Components.Comps
 {
     public partial class AddBookForm
     {
+        
         [Inject]
         private IAuthorService AuthorService { get; set; }
         [Inject]
@@ -76,6 +77,14 @@ namespace Library.Blazor.Components.Comps
             {
                 //TODO: Add image upload
             }
+        }
+
+        private void AddNewLanguage(LanguageResponseDto language)
+        {
+            Console.WriteLine("added new language " + language.LanguageName);
+            LanguagesList = LanguagesList.Append(language);
+            SelectedLanguage = language.LanguageName;
+            StateHasChanged();
         }
     }
 }

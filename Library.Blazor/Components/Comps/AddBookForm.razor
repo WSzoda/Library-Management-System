@@ -36,13 +36,13 @@
             <div>
                 <RadzenDropDownDataGrid id="author" @bind-Value="@SelectedAuthor" Data="@AuthorsList.Select(a => (a.Name + " " + a.Surname))" TValue="string" />
             </div>
-            <AddLanguageForm/>
         </div>
         <div class="mb-3">
             <label for="language" class="form-label">Language</label>
             <div>
                 <RadzenDropDownDataGrid id="language" @bind-Value="@SelectedLanguage" Data="@LanguagesList.Select(l => l.LanguageName)" TValue="string" />
             </div>
+            <AddLanguageForm OnLanguageAdded="AddNewLanguage"/>
         </div>
         <div class="mb-3">
             <label for="genre" class="form-label">Genre</label>

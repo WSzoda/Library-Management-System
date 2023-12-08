@@ -23,11 +23,16 @@ namespace Library.Blazor.Services.LanguageService
             return languages!;
         }
         
-        public async Task AddLanguageAsync(LanguageCreateDto language)
+        public async Task<LanguageResponseDto> AddLanguageAsync(LanguageCreateDto language)
         {
             var languageJson = new StringContent(JsonSerializer.Serialize(language), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(Endpoint, languageJson);
             response.EnsureSuccessStatusCode();
+            
+            var stream = await response.Content.ReadAsStreamAsync();
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var createdLanguage = await JsonSerializer.DeserializeAsync<LanguageResponseDto>(stream, options);
+            return createdLanguage!;
         }
     }
 }

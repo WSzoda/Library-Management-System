@@ -6,6 +6,9 @@ namespace Library.Blazor.Components.Comps;
 
 partial class AddLanguageForm
 {
+    [Parameter]
+    public Action<LanguageResponseDto>? OnLanguageAdded { get; set; }
+    
     [Inject]
     private ILanguageService? LanguageService { get; set; }
 
@@ -14,10 +17,11 @@ partial class AddLanguageForm
 
     private async Task HandleSubmit()
     {
-        var language = new LanguageCreateDto { Name = _languageName };
+        var language = new LanguageCreateDto { LanguageName = _languageName };
         try
         {
-            await LanguageService!.AddLanguageAsync(language);
+            var newLanguage = await LanguageService!.AddLanguageAsync(language);
+            OnLanguageAdded?.Invoke(newLanguage);
         }
         catch (Exception e)
         {
