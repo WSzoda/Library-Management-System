@@ -56,6 +56,7 @@
             <div>
                 <RadzenDropDownDataGrid id="publisher" @bind-Value="@SelectedPublisher" Data=@PublishersList.Select(p => p.Name) TValue="string" />
             </div>
+            <AddPublisherModal OnPublisherAdded="AddNewPublisher"/>
         </div>
         <button type="submit" class="btn btn-primary">Create Book</button>
     </form>

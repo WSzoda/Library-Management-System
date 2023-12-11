@@ -1,10 +1,10 @@
 ﻿@if (_isOpen)
 {
-    <div class="modal" tabindex="-1" role="dialog" id="addGenreModal" style="display: block">
+    <div class="modal" tabindex="-1" role="dialog" id="addCountryModal" style="display: block">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Genre</h5>
+                    <h5 class="modal-title">Add Country</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="CloseModal">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -12,10 +12,10 @@
                 <div class="modal-body my-3">
                     <form @onsubmit="HandleSubmit">
                         <div class="form-group">
-                            <label for="inputGenreName">Genre Name</label>
-                            <input type="text" class="form-control" id="inputGenreName" placeholder="Enter Genre name" @bind="_genreName" />
+                            <label for="inputCountryName">Country Name</label>
+                            <input type="text" class="form-control" id="inputCountryName" placeholder="Enter country name" @bind="_countryName" />
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block mt-5">Add Genre</button>
+                        <button type="submit" class="btn btn-primary btn-block mt-5">Add Country</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -26,6 +26,6 @@
     </div>
 }
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addGenreModal" @onclick="OpenModal">
-    Add Genre
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCountryModal" @onclick="OpenModal">
+    Add new Country
 </button>

@@ -92,5 +92,11 @@ namespace Library.Blazor.Components.Comps
             SelectedGenre = genre.Name;
             StateHasChanged();
         }
+        private void AddNewPublisher(PublisherResponseDto publisher)
+        {
+            PublishersList = PublishersList.Append(publisher);
+            SelectedPublisher = publisher.Name;
+            StateHasChanged();
+        }
     }
 }

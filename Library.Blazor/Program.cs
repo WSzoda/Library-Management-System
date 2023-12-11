@@ -7,6 +7,7 @@ using Library.Blazor.Components;
 using Library.Blazor.Services.AuthorizationService;
 using Library.Blazor.Services.AuthorService;
 using Library.Blazor.Services.BookService;
+using Library.Blazor.Services.CountryService;
 using Library.Blazor.Services.GenreService;
 using Library.Blazor.Services.LanguageService;
 using Library.Blazor.Services.PublisherService;
@@ -26,5 +27,6 @@ builder.Services.AddScoped<ILanguageService, LanguageService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IPublisherService, PublisherService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICountryService, CountryService>();
 
 await builder.Build().RunAsync();

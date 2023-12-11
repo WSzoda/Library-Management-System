@@ -1,27 +1,27 @@
-﻿using Library.Blazor.Services.LanguageService;
+﻿using Library.Blazor.Services.CountryService;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
 
 namespace Library.Blazor.Components.Comps;
 
-partial class AddLanguageModal
+partial class AddCountryModal
 {
     [Parameter]
-    public Action<LanguageResponseDto>? OnLanguageAdded { get; set; }
+    public Action<CountryResponseDto>? OnCountryAdded { get; set; }
     
     [Inject]
-    private ILanguageService? LanguageService { get; set; }
+    private ICountryService? CountryService { get; set; }
 
-    private string _languageName = default!;
+    private string _countryName = default!;
     private bool _isOpen;
 
     private async Task HandleSubmit()
     {
-        var language = new LanguageCreateDto { LanguageName = _languageName };
+        var country = new CountryCreateDto() { Name = _countryName };
         try
         {
-            var newLanguage = await LanguageService!.AddLanguageAsync(language);
-            OnLanguageAdded?.Invoke(newLanguage);
+            var newCountry = await CountryService!.AddCountryAsync(country);
+            OnCountryAdded?.Invoke(newCountry);
         }
         catch (Exception e)
         {

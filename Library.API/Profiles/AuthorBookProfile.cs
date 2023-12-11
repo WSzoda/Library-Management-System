@@ -2,7 +2,7 @@
 using Library.Domain;
 using Library.DTOs;
 
-namespace Biblioteka.Profiles
+namespace Library.API.Profiles
 {
     public class AuthorBookProfile : Profile
     {
