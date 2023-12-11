@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Library.Blazor.Components.Pages.Books
 {
-    public partial class Home
+    public partial class BooksHome
     {
         [Inject]
         private IBooksService BooksService { get; set; }

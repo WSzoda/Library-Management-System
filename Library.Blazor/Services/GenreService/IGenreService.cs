@@ -5,6 +5,7 @@ namespace Library.Blazor.Services.GenreService
     public interface IGenreService
     {
         Task<IEnumerable<GenreResponseDto>> GetGenresAsync();
-        public Task<GenreResponseDto> AddGenreAsync(GenreToCreateDto dto);
+        Task<GenreResponseDto> AddGenreAsync(GenreToCreateDto dto);
+        Task<GenreResponseDto> EditGenreAsync(GenreResponseDto dto);
     }
 }

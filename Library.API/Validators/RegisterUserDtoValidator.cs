@@ -1,7 +1,8 @@
-﻿using Biblioteka.Data;
-using FluentValidation;
+﻿using FluentValidation;
+using Library.API.Data;
+using Library.DTOs;
 
-namespace Library.DTOs.Validators
+namespace Library.API.Validators
 {
     public class RegisterUserDtoValidator : AbstractValidator<RegisterUserDto>
     {

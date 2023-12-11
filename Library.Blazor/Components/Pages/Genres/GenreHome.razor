@@ -1,0 +1,35 @@
+﻿@page "/genres"
+
+<div class="container mt-4">
+    @if (_isLoading)
+    {
+        <div class="col-md-12">
+            <h3 class="text-center">Loading...</h3>
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-between align-items-center mb-3">
+            <div class="col-auto">
+                <h2>Genres</h2>
+            </div>
+            <div class="col-auto">
+                <AddGenreModal/>
+            </div>
+        </div>
+        <RadzenGrid TItem="GenreResponseDto" Data="@_genres" >
+            <Columns>
+                <RadzenGridColumn TItem="GenreResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
+                <RadzenGridColumn TItem="GenreResponseDto" Property="Name" Title="Name"></RadzenGridColumn>
+                <RadzenGridColumn TItem="GenreResponseDto">
+                    <Template Context="genre" >
+                        <div class="btn-group">
+                            <AddGenreModal IsEdited="true" GenreToEdit="genre" />
+                            <button class="btn btn-danger" @onclick="() => DeleteGenre(genre)">Delete</button>
+                        </div>
+                    </Template>
+                </RadzenGridColumn>
+            </Columns>
+        </RadzenGrid>
+    }
+</div>

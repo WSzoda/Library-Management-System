@@ -33,8 +33,9 @@ namespace Library.Blazor.Services.PublisherService
 
         public async Task<PublisherResponseDto> AddPublisherAsync(PublisherCreateDto publisher)
         {
-            var publisherJson = JsonSerializer.Serialize(publisher);
-            var response = await _httpClient.PostAsync(Endpoint, new StringContent(publisherJson, Encoding.UTF8, "application/json"));
+            var publisherJson =
+                new StringContent(JsonSerializer.Serialize(publisher), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(Endpoint, publisherJson);
             var stream = await response.Content.ReadAsStreamAsync();
             var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
             var newPublisher = await JsonSerializer.DeserializeAsync<PublisherResponseDto>(stream, options);

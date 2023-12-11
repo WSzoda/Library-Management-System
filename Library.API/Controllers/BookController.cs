@@ -1,15 +1,16 @@
 using AutoMapper;
-using Biblioteka.Data.Abstract;
+using Library.API.Data.Abstract;
 using Library.API.Services.Abstract;
 using Library.Domain;
 using Library.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 
-namespace Biblioteka.Controllers
+namespace Library.API.Controllers
 {
     [ApiController]
     [Route("api/books")]
+    [Authorize]
     public class BookController : ControllerBase
     {
         private readonly IBookRepository _booksRepository;
@@ -28,6 +29,7 @@ namespace Biblioteka.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<BookResponseDto>> GetBooks([FromQuery] List<int> genreIds, [FromQuery] List<int> languageIds)
         {
             _logger.LogInformation("Getting all books");

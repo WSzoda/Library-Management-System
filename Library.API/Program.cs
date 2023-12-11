@@ -1,18 +1,16 @@
 using System.Text;
 using System.Text.Json.Serialization;
-using Biblioteka.Data;
-using Biblioteka.Data.Abstract;
-using Biblioteka.Data.Concrete;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Library.API;
+using Library.API.Data;
 using Library.API.Data.Abstract;
 using Library.API.Data.Concrete;
 using Library.API.Services.Abstract;
 using Library.API.Services.Concrete;
+using Library.API.Validators;
 using Library.Domain;
 using Library.DTOs;
-using Library.DTOs.Validators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -93,6 +91,8 @@ app.UseBlazorFrameworkFiles();
 
 app.UseAuthentication();
 
+app.UseAuthorization();
+
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -100,6 +100,7 @@ app.UseStaticFiles();
 app.UseCors("Open");
 
 app.MapControllers();
+
 
 app.MapFallbackToFile("index.html");
 

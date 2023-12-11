@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Biblioteka.Data;
+using Library.API.Data;
 using Library.API.Services.Abstract;
 using Library.Domain;
 using Library.DTOs;

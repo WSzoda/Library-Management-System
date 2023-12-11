@@ -34,5 +34,11 @@ namespace Library.Blazor.Services.GenreService
             var genre = JsonSerializer.DeserializeAsync<GenreResponseDto>(responseStream, options);
             return genre.Result!;
         }
+
+        public Task<GenreResponseDto> EditGenreAsync(GenreResponseDto dto)
+        {
+            //TODO: Implement this method
+            throw new NotImplementedException();
+        }
     }
 }

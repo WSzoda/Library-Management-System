@@ -1,7 +1,7 @@
 using Library.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Biblioteka.Data
+namespace Library.API.Data
 {
     public class LibraryDbContext : DbContext
     {

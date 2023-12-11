@@ -51,5 +51,7 @@ namespace Library.Blazor.Services.BookService
             var createdBook = await JsonSerializer.DeserializeAsync<BookResponseDto>(stream, options);
             return createdBook!;
         }
+        
+        
     }
 }

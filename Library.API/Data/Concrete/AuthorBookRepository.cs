@@ -1,8 +1,8 @@
-﻿using Biblioteka.Data.Abstract;
+﻿using Library.API.Data.Abstract;
 using Library.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Biblioteka.Data.Concrete
+namespace Library.API.Data.Concrete
 {
     public class AuthorBookRepository : IAuthorBookRepository
     {

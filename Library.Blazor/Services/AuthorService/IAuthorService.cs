@@ -6,5 +6,6 @@ namespace Library.Blazor.Services.AuthorService
     {
         Task<IEnumerable<AuthorResponseDto>> GetAuthorsAsync();
         Task<AuthorResponseDto> GetAuthorByIdAsync(int id);
+        Task<AuthorResponseDto> AddAuthorAsync(AuthorCreateDto author);
     }
 }

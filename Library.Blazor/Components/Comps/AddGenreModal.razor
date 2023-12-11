@@ -4,7 +4,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Genre</h5>
+                    <h5 class="modal-title">@_modalButtonsText</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="CloseModal">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -15,7 +15,7 @@
                             <label for="inputGenreName">Genre Name</label>
                             <input type="text" class="form-control" id="inputGenreName" placeholder="Enter Genre name" @bind="_genreName" />
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block mt-5">Add Genre</button>
+                        <button type="submit" class="btn btn-primary btn-block mt-5">@_modalButtonsText</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -27,5 +27,5 @@
 }
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addGenreModal" @onclick="OpenModal">
-    Add Genre
+    @_modalButtonsText
 </button>

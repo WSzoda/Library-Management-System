@@ -1,0 +1,35 @@
+﻿@page "/languages"
+
+<div class="container mt-4">
+    @if (_isLoading)
+    {
+        <div class="col-md-12">
+            <h3 class="text-center">Loading...</h3>
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-between align-items-center mb-3">
+            <div class="col-auto">
+                <h2>Languages</h2>
+            </div>
+            <div class="col-auto">
+                <AddCountryModal/>
+            </div>
+        </div>
+        <RadzenGrid TItem="LanguageResponseDto" Data="@_languages" >
+            <Columns>
+                <RadzenGridColumn TItem="LanguageResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
+                <RadzenGridColumn TItem="LanguageResponseDto" Property="LanguageName" Title="Name"></RadzenGridColumn>
+                <RadzenGridColumn TItem="LanguageResponseDto">
+                    <Template Context="language">
+                        <div class="btn-group">
+                            <button class="btn btn-primary" @onclick="() => EditLanguage(language)">Edit</button>
+                            <button class="btn btn-danger" @onclick="() => DeleteLanguage(language)">Delete</button>
+                        </div>
+                    </Template>
+                </RadzenGridColumn>
+            </Columns>
+        </RadzenGrid>
+    }
+</div>

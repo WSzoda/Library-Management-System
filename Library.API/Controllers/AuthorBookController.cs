@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Biblioteka.Data.Abstract;
+using Library.API.Data.Abstract;
 using Library.Domain;
 using Library.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Biblioteka.Controllers
+namespace Library.API.Controllers
 {
     [ApiController]
     [Route("api/authorbooks")]

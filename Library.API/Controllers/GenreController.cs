@@ -2,12 +2,14 @@
 using Library.API.Data.Abstract;
 using Library.Domain;
 using Library.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
 {
-    [ApiController]
     [Route("api/genres")]
+    [ApiController]
+    [Authorize]
     public class GenreController : ControllerBase
     {
         private readonly IGenreRepository _genreRepository;
@@ -22,6 +24,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetGenres()
         {
             _logger.LogInformation("Getting all genres");

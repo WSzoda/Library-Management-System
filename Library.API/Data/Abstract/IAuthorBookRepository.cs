@@ -1,6 +1,6 @@
 ﻿using Library.Domain;
 
-namespace Biblioteka.Data.Abstract
+namespace Library.API.Data.Abstract
 {
     public interface IAuthorBookRepository
     {

@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using Library.DTOs;
 
 namespace Library.Blazor.Services.AuthorService
@@ -29,6 +30,16 @@ namespace Library.Blazor.Services.AuthorService
             var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
             var author = await JsonSerializer.DeserializeAsync<AuthorResponseDto>(stream, options);
             return author!;
+        }
+
+        public async Task<AuthorResponseDto> AddAuthorAsync(AuthorCreateDto author)
+        {
+            var authorJson = new StringContent(JsonSerializer.Serialize(author), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(Endpoint, authorJson);
+            var stream = await response.Content.ReadAsStreamAsync();
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var newAuthor = await JsonSerializer.DeserializeAsync<AuthorResponseDto>(stream, options);
+            return newAuthor!;
         }
     }
 }
