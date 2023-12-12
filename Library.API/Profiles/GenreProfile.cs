@@ -10,6 +10,7 @@ namespace Library.API.Profiles
         {
             CreateMap<Genre, GenreResponseDto>();
             CreateMap<GenreToCreateDto, Genre>();
+            CreateMap<GenreResponseDto, Genre>();
         }
     }
 }

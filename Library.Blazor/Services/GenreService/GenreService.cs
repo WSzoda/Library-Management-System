@@ -35,10 +35,18 @@ namespace Library.Blazor.Services.GenreService
             return genre.Result!;
         }
 
-        public Task<GenreResponseDto> EditGenreAsync(GenreResponseDto dto)
+        public async Task<GenreResponseDto> EditGenreAsync(GenreResponseDto dto)
         {
-            //TODO: Implement this method
-            throw new NotImplementedException();
+            var genreJson = new StringContent(JsonSerializer.Serialize(dto), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PatchAsync($"{Endpoint}/{dto.Id}", genreJson);
+            response.EnsureSuccessStatusCode();
+            return dto;
+        }
+        
+        public async Task DeleteGenreAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"{Endpoint}/{id}");
+            response.EnsureSuccessStatusCode();
         }
     }
 }

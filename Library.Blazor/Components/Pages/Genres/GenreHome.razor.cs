@@ -16,17 +16,19 @@ partial class GenreHome
     protected override async Task OnInitializedAsync()
     {
         _genres = await GenreService!.GetGenresAsync();
-        _genres = _genres.ToList();
         _isLoading = false;
     }
     
-    void EditGenre(GenreResponseDto genre)
+    private void EditGenre(GenreResponseDto genre)
     {
-        // Implement the logic for editing a genre here
+        _genres!.First(g => g.Id == genre.Id).Name = genre.Name;
+        StateHasChanged();
     }
 
-    void DeleteGenre(GenreResponseDto genre)
+    private async Task DeleteGenreAsync(GenreResponseDto genre)
     {
-        // Implement the logic for deleting a genre here
+        await GenreService!.DeleteGenreAsync(genre.Id);
+        _genres!.ToList().RemoveAll(g => g.Id == genre.Id);
+        StateHasChanged();
     }
 }

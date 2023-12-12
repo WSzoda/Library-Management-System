@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Library.Blazor.Components.Comps;
 
-partial class AddGenreModal
+partial class GenreModal
 {
     [Parameter]
     public Action<GenreResponseDto>? OnGenreAdded { get; set; }

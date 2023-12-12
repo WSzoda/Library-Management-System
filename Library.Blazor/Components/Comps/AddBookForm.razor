@@ -49,7 +49,7 @@
             <div>
                 <RadzenDropDownDataGrid id="genre" @bind-Value="@SelectedGenre" Data="@GenresList.Select(g => g.Name)" TValue="string" />
             </div>
-            <AddGenreModal OnGenreAdded="AddNewGenre"/>
+            <GenreModal OnGenreAdded="AddNewGenre"/>
         </div>
         <div class="mb-3">
             <label for="publisher" class="form-label">Publisher</label>

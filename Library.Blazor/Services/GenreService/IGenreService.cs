@@ -1,4 +1,5 @@
-﻿using Library.DTOs;
+﻿using Library.Domain;
+using Library.DTOs;
 
 namespace Library.Blazor.Services.GenreService
 {
@@ -7,5 +8,6 @@ namespace Library.Blazor.Services.GenreService
         Task<IEnumerable<GenreResponseDto>> GetGenresAsync();
         Task<GenreResponseDto> AddGenreAsync(GenreToCreateDto dto);
         Task<GenreResponseDto> EditGenreAsync(GenreResponseDto dto);
+        Task DeleteGenreAsync(int id);
     }
 }

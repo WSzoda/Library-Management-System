@@ -67,5 +67,42 @@ namespace Library.API.Controllers
                 return BadRequest("Something went wrong");
             }
         }
+        
+        [HttpPatch]
+        [Route("{id}")]
+        public async Task<IActionResult> EditGenre(int id, GenreResponseDto genre)
+        {
+            try
+            {
+                _logger.LogInformation($"Editing genre with id: {id}");
+                var genreEntity = _mapper.Map<Genre>(genre);
+                await _genreRepository.UpdateGenre(genreEntity);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error happened when editing genre with id: {id}");
+                _logger.LogError(ex.Message);
+                return BadRequest("Something went wrong");
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteGenre(int id)
+        {
+            try
+            {
+                _logger.LogInformation($"Deleting genre with id: {id}");
+                await _genreRepository.DeleteGenre(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error happened when deleting genre with id: {id}");
+                _logger.LogError(ex.Message);
+                return BadRequest("Something went wrong");
+            }
+        }
     }
 }
