@@ -13,7 +13,7 @@ public class UsersService : IUsersService
     {
         _httpClient = httpClient;
     }
-    public async Task<IEnumerable<UserResponseDto>> GetAllUsersAsync()
+    public async Task<IEnumerable<UserResponseDto>> GetUsersAsync()
     {
         try
         {
