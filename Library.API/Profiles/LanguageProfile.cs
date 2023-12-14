@@ -10,6 +10,7 @@ namespace Library.API.Profiles
         {
             CreateMap<Language, LanguageResponseDto>();
             CreateMap<LanguageCreateDto, Language>();
+            CreateMap<LanguageResponseDto, Language>();
         }
     }
 }

@@ -38,4 +38,22 @@ public class CountryService : ICountryService
             throw new Exception("Something went wrong");
         }
     }
+    
+    public async Task<CountryResponseDto> EditCountryAsync(CountryResponseDto country)
+    {
+        var countryJson = new StringContent(JsonSerializer.Serialize(country), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PatchAsync($"{Endpoint}/{country.Id}", countryJson);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception("Something went wrong");
+        }
+
+        return country;
+    }
+
+    public async Task DeleteCountryAsync(int id)
+    {
+        var response = await _httpClient.DeleteAsync($"{Endpoint}/{id}");
+        response.EnsureSuccessStatusCode();
+    }
 }

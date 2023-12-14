@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Library.DTOs\Library.DTOs.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\Pages\Accounts\" />
+  </ItemGroup>
+
 </Project>

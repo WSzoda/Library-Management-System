@@ -4,7 +4,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Publisher</h5>
+                    <h5 class="modal-title">@_modalButtonsText</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="CloseModal">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -13,7 +13,7 @@
                     <form @onsubmit="HandleSubmit">
                         <div class="form-group">
                             <label for="inputPublisherName">Publisher Name</label>
-                            <input type="text" class="form-control" id="inputPublisherName" placeholder="Enter genre name" @bind="_publisherName" />
+                            <input type="text" class="form-control" id="inputPublisherName" placeholder="Enter publisher name" @bind="_publisherName" />
                         </div>
                         <div class="form-group">
                             <label for="inputPublisherYearOfCreation">Year of Creation</label>
@@ -23,10 +23,10 @@
                             <label for="inputPublisherCountry">Country</label>
                             <div class="form-group">
                                 <RadzenDropDownDataGrid class="form-control" id="inputPublisherCountry" @bind-Value="@_selectedCountry" Data=@_countries.Select(p => p.Name) TValue="string" />
-                                <AddCountryModal OnCountryAdded="AddNewCountry"/>
+                                <CountryModal OnCountryAdded="AddNewCountry"/>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block mt-4">Add Publisher</button>
+                        <button type="submit" class="btn btn-primary btn-block mt-4">@_modalButtonsText</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -38,5 +38,5 @@
 }
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPublisherModal" @onclick="OpenModal">
-    Add new Publisher
+    @_modalButtonsText
 </button>

@@ -42,7 +42,7 @@
             <div>
                 <RadzenDropDownDataGrid id="language" @bind-Value="@SelectedLanguage" Data="@LanguagesList.Select(l => l.LanguageName)" TValue="string" />
             </div>
-            <AddLanguageModal OnLanguageAdded="AddNewLanguage"/>
+            <LanguageModal OnLanguageAdded="AddNewLanguage"/>
         </div>
         <div class="mb-3">
             <label for="genre" class="form-label">Genre</label>
@@ -56,7 +56,7 @@
             <div>
                 <RadzenDropDownDataGrid id="publisher" @bind-Value="@SelectedPublisher" Data=@PublishersList.Select(p => p.Name) TValue="string" />
             </div>
-            <AddPublisherModal OnPublisherAdded="AddNewPublisher"/>
+            <PublisherModal OnPublisherAdded="AddNewPublisher"/>
         </div>
         <button type="submit" class="btn btn-primary">Create Book</button>
     </form>

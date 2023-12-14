@@ -40,5 +40,38 @@ namespace Library.API.Controllers
             var languageDto = _mapper.Map<LanguageResponseDto>(languageEntity);
             return CreatedAtAction(nameof(GetLanguages), new { id = languageEntity.Id }, languageDto);
         }
+        
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> EditLanguage(int id, LanguageResponseDto language)
+        {
+            try
+            {
+                _logger.LogInformation($"Editing language with id {id}");
+                var languageEntity = _mapper.Map<Language>(language);
+                await _languageRepository.UpdateLanguage(languageEntity);
+                return NoContent();
+            }
+            catch (ArgumentNullException)
+            {
+                _logger.LogError($"Language with id {id} was not found.");
+                return NotFound();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteLanguage(int id)
+        {
+            try
+            {
+                _logger.LogInformation($"Deleting language with id {id}");
+                await _languageRepository.DeleteLanguage(id);
+                return NoContent();
+            }
+            catch (ArgumentNullException)
+            {
+                _logger.LogError($"Language with id {id} was not found.");
+                return NotFound();
+            }
+        }
     }
 }

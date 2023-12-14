@@ -7,5 +7,7 @@ namespace Library.Blazor.Services.PublisherService
         Task<IEnumerable<PublisherResponseDto>> GetPublishersAsync();
         Task<PublisherResponseDto> GetPublisherAsync(int id);
         Task<PublisherResponseDto> AddPublisherAsync(PublisherCreateDto publisher);
+        Task<PublisherResponseDto> EditPublisherAsync(PublisherResponseDto publisher);
+        Task DeletePublisherAsync(int id);
     }
 }

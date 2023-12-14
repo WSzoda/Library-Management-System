@@ -41,5 +41,17 @@ namespace Library.API.Data.Concrete
             ArgumentNullException.ThrowIfNull(publisher);
             return publisher;
         }
+
+        public async Task DeletePublisher(int id)
+        {
+            if(id <= 0)
+            {
+                throw new ArgumentException("Id cannot be less than 1");
+            }
+            var publisher = _context.Publishers.FirstOrDefault(x => x.Id == id);
+            ArgumentNullException.ThrowIfNull(publisher);
+            _context.Publishers.Remove(publisher);
+            await _context.SaveChangesAsync();
+        }
     }
 }

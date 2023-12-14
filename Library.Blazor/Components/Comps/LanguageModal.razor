@@ -4,7 +4,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Language</h5>
+                    <h5 class="modal-title">@_modalButtonsText</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="CloseModal">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -15,7 +15,7 @@
                             <label for="inputLanguageName">Language Name</label>
                             <input type="text" class="form-control" id="inputLanguageName" placeholder="Enter language name" @bind="_languageName" />
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Add Language</button>
+                        <button type="submit" class="btn btn-primary btn-block">@_modalButtonsText</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -27,6 +27,6 @@
 }
 
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLanguageModal" @onclick="OpenModal">
-    Add Language
+    @_modalButtonsText
 </button>
 

@@ -59,5 +59,27 @@ namespace Library.API.Controllers
                 return BadRequest();
             }   
         }
+        
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult> DeletePublisher(int id)
+        {
+            _logger.LogInformation($"Deleting publisher with id: {id}");
+            try
+            {
+                await _publisherRepository.DeletePublisher(id);
+                return NoContent();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex, $"Publisher with id: {id} not found");
+                return NotFound();
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, $"Id cannot be less than 1");
+                return BadRequest();
+            }   
+        }
     }
 }

@@ -14,7 +14,7 @@
                 <h2>Languages</h2>
             </div>
             <div class="col-auto">
-                <AddCountryModal/>
+                <LanguageModal OnLanguageAdded="AddLanguage"/>
             </div>
         </div>
         <RadzenGrid TItem="LanguageResponseDto" Data="@_languages" >
@@ -24,7 +24,7 @@
                 <RadzenGridColumn TItem="LanguageResponseDto">
                     <Template Context="language">
                         <div class="btn-group">
-                            <button class="btn btn-primary" @onclick="() => EditLanguage(language)">Edit</button>
+                            <LanguageModal IsEdited="true" LanguageToEdit="language"  OnLanguageEdited="EditLanguage"/>
                             <button class="btn btn-danger" @onclick="() => DeleteLanguage(language)">Delete</button>
                         </div>
                     </Template>

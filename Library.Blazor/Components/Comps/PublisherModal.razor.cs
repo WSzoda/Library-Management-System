@@ -6,10 +6,19 @@ using Microsoft.AspNetCore.Components;
 
 namespace Library.Blazor.Components.Comps;
 
-partial class AddPublisherModal
+partial class PublisherModal
 {
     [Parameter]
     public Action<PublisherResponseDto>? OnPublisherAdded { get; set; }
+    
+    [Parameter]
+    public Action<PublisherResponseDto>? OnPublisherEdited { get; set; }
+    
+    [Parameter]
+    public bool IsEdited { get; set; }
+    
+    [Parameter]
+    public PublisherResponseDto? PublisherToEdit { get; set; }
     
     [Inject]
     private IPublisherService? PublisherService { get; set; }
@@ -21,12 +30,20 @@ partial class AddPublisherModal
     private int _countryId;
     private bool _isOpen;
     private string _selectedCountry = string.Empty;
-    private IEnumerable<CountryResponseDto> _countries;
+    private IEnumerable<CountryResponseDto> _countries = new List<CountryResponseDto>();
+    private string _modalButtonsText = "Add Publisher";
 
     protected override async Task OnInitializedAsync()
     {
         _countries = await CountryService!.GetCountriesAsync();
         _countries = _countries.ToList();
+        if (IsEdited)
+        {
+            _publisherName = PublisherToEdit!.Name;
+            _yearOfCreation = PublisherToEdit.YearOfCreation;
+            _selectedCountry = _countries.First(c => c.Id == PublisherToEdit.CountryId).Name;
+            _modalButtonsText = "Edit Publisher";
+        }
     }
     
     

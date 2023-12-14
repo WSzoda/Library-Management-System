@@ -18,4 +18,22 @@ partial class CountriesHome
         _countries = _countries.ToList();
         _isLoading = false;
     }
+    
+    private void AddCountry(CountryResponseDto country)
+    {
+        _countries?.ToList().Add(country);
+    }
+    
+    private void EditCountry(CountryResponseDto country)
+    {
+        _countries!.First(l => l.Id == country.Id).Name = country.Name;
+        StateHasChanged();
+    }
+    
+    private async void DeleteCountry(CountryResponseDto country)
+    {
+        await CountryService!.DeleteCountryAsync(country.Id);
+        _countries!.ToList().RemoveAll(l => l.Id == country.Id);
+        StateHasChanged();
+    }
 }

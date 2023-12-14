@@ -1,0 +1,36 @@
+﻿@page "/publishers"
+
+<div class="container mt-4">
+    @if (_isLoading)
+    {
+        <div class="col-md-12">
+            <h3 class="text-center">Loading...</h3>
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-between align-items-center mb-3">
+            <div class="col-auto">
+                <h2>Publishers</h2>
+            </div>
+            <div class="col-auto">
+                <PublisherModal/>
+            </div>
+        </div>
+        <RadzenGrid TItem="PublisherResponseDto" Data="@_publishers" >
+            <Columns>
+                <RadzenGridColumn TItem="PublisherResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
+                <RadzenGridColumn TItem="PublisherResponseDto" Property="Name" Title="Name"></RadzenGridColumn>
+                <RadzenGridColumn TItem="PublisherResponseDto" Property="YearOfCreation" Title="Year of Creation"></RadzenGridColumn>
+                <RadzenGridColumn TItem="PublisherResponseDto">
+                    <Template Context="publisher">
+                        <div class="btn-group">
+                            <PublisherModal IsEdited="true" PublisherToEdit="publisher" OnPublisherEdited="EditPublisher"/>
+                            <button class="btn btn-danger" @onclick="() => DeletePublisher(publisher)">Delete</button>
+                        </div>
+                    </Template>
+                </RadzenGridColumn>
+            </Columns>
+        </RadzenGrid>
+    }
+</div>

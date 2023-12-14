@@ -6,7 +6,7 @@ using static System.String;
 
 namespace Library.Blazor.Components.Comps;
 
-partial class AddAuthorModal
+partial class AuthorModal
 {
     //TODO: End implementation
     [Parameter]

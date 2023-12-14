@@ -34,5 +34,20 @@ namespace Library.Blazor.Services.LanguageService
             var createdLanguage = await JsonSerializer.DeserializeAsync<LanguageResponseDto>(stream, options);
             return createdLanguage!;
         }
+
+        public async Task<LanguageResponseDto> EditLanguageAsync(LanguageResponseDto language)
+        {
+            var languageJson = new StringContent(JsonSerializer.Serialize(language), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PatchAsync($"{Endpoint}/{language.Id}", languageJson);
+            response.EnsureSuccessStatusCode();
+            
+            return language;
+        }
+
+        public async Task DeleteLanguageAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"{Endpoint}/{id}");
+            response.EnsureSuccessStatusCode();
+        }
     }
 }

@@ -42,5 +42,19 @@ namespace Library.Blazor.Services.PublisherService
             return newPublisher!;
         }
         
+        public async Task<PublisherResponseDto> EditPublisherAsync(PublisherResponseDto publisher)
+        {
+            var publisherJson =
+                new StringContent(JsonSerializer.Serialize(publisher), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PatchAsync($"{Endpoint}/{publisher.Id}", publisherJson);
+            response.EnsureSuccessStatusCode();
+            return publisher;
+        }
+
+        public async Task DeletePublisherAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"{Endpoint}/{id}");
+            response.EnsureSuccessStatusCode();
+        }
     }
 }

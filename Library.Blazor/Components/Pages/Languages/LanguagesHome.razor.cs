@@ -20,13 +20,21 @@ partial class LanguagesHome
         _isLoading = false;
     }
     
+    private void AddLanguage(LanguageResponseDto language)
+    {
+        _languages.ToList().Add(language);
+    }
+    
     void EditLanguage(LanguageResponseDto language)
     {
-        // Implement the logic for editing a genre here
+        _languages.First(l => l.Id == language.Id).LanguageName = language.LanguageName;
+        StateHasChanged();
     }
 
-    void DeleteLanguage(LanguageResponseDto language)
+    async void DeleteLanguage(LanguageResponseDto language)
     {
-        // Implement the logic for deleting a genre here
+        await LanguageService!.DeleteLanguageAsync(language.Id);
+        _languages.ToList().RemoveAll(l => l.Id == language.Id);
+        StateHasChanged();
     }
 }

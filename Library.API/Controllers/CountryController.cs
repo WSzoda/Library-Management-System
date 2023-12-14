@@ -65,4 +65,37 @@ public class CountryController : ControllerBase
         return CreatedAtAction(nameof(GetCountries), new { id = countryEntity.Id }, countryDto);
     }
     
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<CountryResponseDto>> EditCountry(int id, [FromBody] CountryResponseDto country)
+    {
+        try
+        {
+            _logger.LogInformation($"Editing country with id: {id}");
+            var countryEntity = _mapper.Map<Country>(country);
+            var countryResponse = await _countryRepository.EditCountry(id, countryEntity);
+            return Ok(_mapper.Map<CountryResponseDto>(countryResponse));
+        }
+        catch (ArgumentNullException)
+        {
+            _logger.LogWarning($"Country with id: {id} not found");
+            return NotFound($"Country with id: {id} not found");
+        }
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteCountry(int id)
+    {
+        try
+        {
+            _logger.LogInformation($"Deleting country with id: {id}");
+            await _countryRepository.DeleteCountry(id);
+            return NoContent();
+        }
+        catch (ArgumentNullException)
+        {
+            _logger.LogWarning($"Country with id: {id} not found");
+            return NotFound($"Country with id: {id} not found");
+        }
+    }
+    
 }
