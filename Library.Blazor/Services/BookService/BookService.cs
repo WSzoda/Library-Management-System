@@ -4,7 +4,7 @@ using Library.DTOs;
 
 namespace Library.Blazor.Services.BookService
 {
-    public class BookService : IBooksService
+    public class BookService : IBookService
     {
         private const string Endpoint = "api/books";
         private readonly HttpClient _httpClient;

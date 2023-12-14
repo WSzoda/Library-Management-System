@@ -21,7 +21,7 @@ namespace Library.Blazor.Components.Comps
         [Inject]
         private IPublisherService PublisherService { get; set; }
         [Inject]
-        private IBooksService BookService { get; set; }
+        private IBookService BookService { get; set; }
 
 
 

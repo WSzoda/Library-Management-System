@@ -10,7 +10,7 @@ namespace Library.Blazor.Components.Pages.Books
     public partial class BooksHome
     {
         [Inject]
-        private IBooksService BooksService { get; set; }
+        private IBookService BooksService { get; set; }
 
         [Inject]
         private IGenreService GenreService { get; set; }
