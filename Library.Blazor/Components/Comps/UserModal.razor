@@ -1,7 +1,7 @@
 ﻿@if (_isOpen)
 {
-    <div class="modal" tabindex="-1" role="dialog" id="addGenreModal" style="display: block">
-        <div class="modal-dialog" role="document">
+    <div class="modal" tabindex="-1" role="dialog" id="addUserModal" style="display: block; background: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">@_modalButtonsText</h5>
@@ -34,6 +34,6 @@
     </div>
 }
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addGenreModal" @onclick="OpenModal">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal" @onclick="OpenModal">
     @_modalButtonsText
 </button>

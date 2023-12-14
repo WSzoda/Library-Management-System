@@ -11,6 +11,7 @@ using Library.Blazor.Services.CountryService;
 using Library.Blazor.Services.GenreService;
 using Library.Blazor.Services.LanguageService;
 using Library.Blazor.Services.PublisherService;
+using Library.Blazor.Services.RentService;
 using Library.Blazor.Services.UsersService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -30,5 +31,6 @@ builder.Services.AddScoped<IPublisherService, PublisherService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<IRentService, RentService>();
 
 await builder.Build().RunAsync();

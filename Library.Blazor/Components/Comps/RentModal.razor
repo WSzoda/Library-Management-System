@@ -1,1 +1,25 @@
-﻿<h3>RentModal_cs</h3>
+﻿@if (_isOpen)
+{
+    <div class="modal" tabindex="-1" role="dialog" id="rentBookModal" style="display: block; background: rgba(0, 0, 0, 0.5); ">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Do you want to rent this book?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="CloseModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form @onsubmit="HandleSubmit" class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CloseModal">Close</button>
+                        <button type="submit" class="btn btn-primary">Rent book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rentBookModal" @onclick="OpenModal">
+    Rent this book
+</button>
