@@ -44,6 +44,22 @@ public class UsersService : IUsersService
             throw;
         }
     }
+    
+    public async Task<UserResponseDto> GetCurrentUserAsync()
+    {
+        try
+        {
+            var stream = await _httpClient.GetStreamAsync($"{Endpoint}/current");
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var user = await JsonSerializer.DeserializeAsync<UserResponseDto>(stream, options);
+            return user!;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 
     public async Task<UserResponseDto> EditUser(UserResponseDto user)
     {

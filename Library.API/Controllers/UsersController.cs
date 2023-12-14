@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using Library.API.Data.Abstract;
 using Library.Blazor.Services.UsersService;
 using Library.DTOs;
@@ -56,6 +57,18 @@ public class UsersController : ControllerBase
         var editedUser = await _usersRepository.EditUser(id, user);
         var userDto = _mapper.Map<UserResponseDto>(editedUser);
         
+        return Ok(userDto);
+    }
+    
+    [HttpGet]
+    [Route("current")]
+    public async Task<ActionResult<UserResponseDto>> GetCurrentUser()
+    {
+        var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if(userId is null) throw new Exception("User not found");
+        
+        var user = await _usersRepository.GetUserById(int.Parse(userId));
+        var userDto = _mapper.Map<UserResponseDto>(user);
         return Ok(userDto);
     }
 }

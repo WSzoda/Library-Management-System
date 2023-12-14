@@ -52,7 +52,7 @@ namespace Library.API.Data
             modelBuilder.Entity<Review>().HasOne(r => r.Book).WithMany(b => b.Reviews).HasForeignKey(r => r.BookId);
             modelBuilder.Entity<Review>().HasOne(r => r.Customer).WithMany(r => r.Reviews).HasForeignKey(r => r.CustomerId);
             modelBuilder.Entity<Rental>().HasOne(r => r.Book).WithMany(b => b.Rentals).HasForeignKey(r => r.BookId);
-            modelBuilder.Entity<Rental>().HasOne(r => r.Customer).WithMany(r => r.Rentals).HasForeignKey(r => r.CustomerId);
+            modelBuilder.Entity<Rental>().HasOne(r => r.User).WithMany(r => r.Rentals).HasForeignKey(r => r.UserId);
             modelBuilder.Entity<Publisher>().HasOne(p => p.Country).WithMany(c => c.Publishers).HasForeignKey(p => p.CountryId);
             modelBuilder.Entity<Author>().HasOne(a => a.Country).WithMany(c => c.Authors).HasForeignKey(a => a.CountryId);
 
