@@ -9,5 +9,6 @@ namespace Library.Domain
         public User? User { get; set; }
         public string RentalDate { get; set; } = string.Empty;
         public string ReturnDate { get; set; } = string.Empty;
+        public bool Returned { get; set; }
     }
 }

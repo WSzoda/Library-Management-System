@@ -8,4 +8,5 @@ public interface IUsersRepository
     Task<IEnumerable<User>> GetAllUsers();
     Task<User> GetUserById(int id);
     Task<User> EditUser(int id, UserResponseDto user);
+    Task EditUserPassword(int userId, PasswordEditDto dto);
 }

@@ -6,6 +6,8 @@ namespace Library.Blazor.Components.Pages.Books;
 
 partial class BookSingle
 {
+    
+    //TODO: disable rent button if book is already rented
     [Parameter]
     public int Id { get; set; }
     

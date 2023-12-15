@@ -71,4 +71,16 @@ public class UsersController : ControllerBase
         var userDto = _mapper.Map<UserResponseDto>(user);
         return Ok(userDto);
     }
+    
+    [HttpPatch]
+    [Route("password")]
+    public async Task<ActionResult> EditUserPassword(PasswordEditDto dto)
+    {
+        var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if(userId is null) throw new Exception("User not found");
+        
+        await _usersRepository.EditUserPassword(int.Parse(userId), dto);
+        return Ok();
+    }
+    
 }

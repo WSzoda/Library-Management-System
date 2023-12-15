@@ -2,6 +2,7 @@
 using Library.Blazor.Services.UsersService;
 using Library.Domain;
 using Library.DTOs;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.API.Data.Concrete;
@@ -9,10 +10,12 @@ namespace Library.API.Data.Concrete;
 public class UserRepository : IUsersRepository
 {
     private readonly LibraryDbContext _context;
+    private readonly IPasswordHasher<User> _passwordHasher;
 
-    public UserRepository(LibraryDbContext context)
+    public UserRepository(LibraryDbContext context, IPasswordHasher<User> passwordHasher)
     {
         _context = context;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<IEnumerable<User>> GetAllUsers()
@@ -49,6 +52,25 @@ public class UserRepository : IUsersRepository
             _context.Users.Update(userToEdit);
             await _context.SaveChangesAsync();
             return userToEdit;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task EditUserPassword(int userId, PasswordEditDto dto)
+    {
+        try
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if(user == null) throw new Exception("User not found");
+            if(dto.Password != dto.ConfirmPassword) throw new Exception("Passwords do not match");
+            
+            user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
         }
         catch (Exception e)
         {

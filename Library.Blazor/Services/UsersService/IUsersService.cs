@@ -8,4 +8,6 @@ public interface IUsersService
     Task<UserResponseDto> GetUserAsync(int id);
     Task<UserResponseDto> GetCurrentUserAsync();
     Task<UserResponseDto> EditUser(UserResponseDto user);
+    
+    Task EditUserPassword(PasswordEditDto dto);
 }

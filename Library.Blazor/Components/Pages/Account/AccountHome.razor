@@ -1,0 +1,25 @@
+﻿@page "/account"
+
+<div class="container mt-4">
+    @if (_isLoading)
+    {
+        <div class="col-md-12">
+            <h3 class="text-center">Loading...</h3>
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-center align-items-center d-flex flex-column mb-3">
+            <div class="d-flex flex-column col-auto rounded border bg-light align-items-center p-5">
+                <h2 class="mb-2">Account</h2>
+                <h5>Name: @_user.Name</h5>
+                <h5>Surname: @_user.Surname</h5>
+                <h5 class="mb-3">Email: @_user.Email</h5>
+                <EditUserDetails IsEdited="true" UserToEdit="_user"/>
+                <EditPasswordModal/>
+                <a href="/account/renthistory"><button class="btn btn-primary mb-5">Rent History</button></a>
+                <a href="/logout"><button class="btn btn-danger mb-1">Logout</button></a>
+            </div>
+        </div>
+    }
+</div>

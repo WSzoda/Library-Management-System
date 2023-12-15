@@ -54,6 +54,7 @@ public class RentalRepository : IRentalRepository
         var rentToUpdate = await _context.Rentals.FirstOrDefaultAsync(r => r.Id == rent.Id);
         if (rentToUpdate is null) throw new Exception("Rent not found");
         rentToUpdate.ReturnDate = DateTime.Now.ToString("dd/MM/yyyy");
+        rentToUpdate.Returned = true;
         _context.Rentals.Update(rentToUpdate);
         await _context.SaveChangesAsync();
         return rentToUpdate;

@@ -18,6 +18,22 @@ public class RentService : IRentService
         _usersService = usersService;
     }
     
+    public async Task<IEnumerable<RentResponseDto> > GetRentsAsync()
+    {
+        try
+        {
+            var stream = await _httpClient.GetStreamAsync(Endpoint);
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var rents = await JsonSerializer.DeserializeAsync<IEnumerable<RentResponseDto>>(stream, options);
+            return rents!;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
     public async Task RentBook(BookResponseDto bookToRent)
     {
         try

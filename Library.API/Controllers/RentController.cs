@@ -71,6 +71,9 @@ public class RentController : ControllerBase
     {
         try
         {
+            _logger.LogInformation("Checking if book is free to rent");
+            var rentsForBook = await _rentalRepository.GetRents(rent.BookId);
+            if(rentsForBook.Any(r => !r.Returned)) throw new Exception("Book is not available");
             _logger.LogInformation("Creating new rent");
             var newRent = await _rentalRepository.CreateRent(rent);
             var newRentDto = _mapper.Map<RentResponseDto>(newRent);
