@@ -22,6 +22,7 @@ namespace Library.Domain
         public int RoleId { get; set; }
         public virtual Role Role { get; set; } = null!;
         public virtual IEnumerable<Rental> Rentals { get; set; } = null!;
+        public virtual IEnumerable<Review> Reviews { get; set; } = null!;
 
     }
 }

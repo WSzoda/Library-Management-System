@@ -9,6 +9,7 @@
         public string Description { get; set; } = string.Empty;
         public string ISBN { get; set; } = string.Empty;
         public string Image { get; set; } = string.Empty;
+        public bool IsAvailable { get; set; }
         public LanguageResponseDto? Language { get; set; }
         public GenreResponseDto? Genre { get; set; }
         public PublisherResponseDto? Publisher { get; set; }

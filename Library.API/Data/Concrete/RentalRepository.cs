@@ -16,10 +16,12 @@ public class RentalRepository : IRentalRepository
 
     public async Task<IEnumerable<Rental>> GetRents(int? id = null)
     {
-        var rents = await _context.Rentals.Include(r => r.Book).Include(r => r.User)
-            .Where(r => id == null || r.UserId == id)
-            .ToListAsync();
-        return rents;
+        var rents = _context.Rentals.Include(r => r.Book).Include(r => r.User).AsSplitQuery();
+        if (id != null)
+        {
+            rents = rents.Where(r => r.BookId == id);
+        }
+        return await rents.ToListAsync();
     }
 
     public async Task<Rental> GetRent(int id)

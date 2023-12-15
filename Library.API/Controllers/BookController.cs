@@ -1,6 +1,7 @@
 using AutoMapper;
 using Library.API.Data.Abstract;
 using Library.API.Services.Abstract;
+using Library.Blazor.Services.RentService;
 using Library.Domain;
 using Library.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -14,18 +15,20 @@ namespace Library.API.Controllers
     public class BookController : ControllerBase
     {
         private readonly IBookRepository _booksRepository;
+        private readonly IRentalRepository _rentalRepository;
         private readonly IAuthorBookRepository _authorBookRepository;
         private readonly ILogger<BookController> _logger;
         private readonly IMapper _mapper;
         private readonly IFileService _fileService;
 
-        public BookController(IBookRepository booksRepository, ILogger<BookController> logger, IMapper mapper, IAuthorBookRepository authorBookRepository, IFileService fileService)
+        public BookController(IBookRepository booksRepository, ILogger<BookController> logger, IMapper mapper, IAuthorBookRepository authorBookRepository, IFileService fileService, IRentService rentService, IRentalRepository rentalRepository)
         {
             _booksRepository = booksRepository;
             _logger = logger;
             _mapper = mapper;
             _authorBookRepository = authorBookRepository;
             _fileService = fileService;
+            _rentalRepository = rentalRepository;
         }
 
         [HttpGet]
@@ -38,6 +41,8 @@ namespace Library.API.Controllers
             foreach(var book in booksDto)
             {
                 book.Authors = _mapper.Map<List<AuthorResponseDto>>(books.Where(b => b.Id == book.Id).SelectMany(b => b.BookAuthors!).Select(ba => ba.Author).ToList());
+                var rents = _rentalRepository.GetRents(book.Id);
+                book.IsAvailable = rents.Result.All(r => r.ReturnDate != "");
             }
             return Ok(booksDto);
         }
@@ -61,7 +66,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateBook(int id, Book book)
+        public IActionResult UpdateBook(int id, Book? book)
         {
             if (book is null)
             {

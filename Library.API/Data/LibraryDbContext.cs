@@ -50,7 +50,7 @@ namespace Library.API.Data
             modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Book).WithMany(b => b.BookAuthors).HasForeignKey(ab => ab.BookId).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Review>().HasOne(r => r.Book).WithMany(b => b.Reviews).HasForeignKey(r => r.BookId);
-            modelBuilder.Entity<Review>().HasOne(r => r.Customer).WithMany(r => r.Reviews).HasForeignKey(r => r.CustomerId);
+            modelBuilder.Entity<Review>().HasOne(r => r.User).WithMany(r => r.Reviews).HasForeignKey(r => r.UserId);
             modelBuilder.Entity<Rental>().HasOne(r => r.Book).WithMany(b => b.Rentals).HasForeignKey(r => r.BookId);
             modelBuilder.Entity<Rental>().HasOne(r => r.User).WithMany(r => r.Rentals).HasForeignKey(r => r.UserId);
             modelBuilder.Entity<Publisher>().HasOne(p => p.Country).WithMany(c => c.Publishers).HasForeignKey(p => p.CountryId);
