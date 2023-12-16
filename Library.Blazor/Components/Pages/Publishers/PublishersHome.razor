@@ -17,7 +17,7 @@
                 <PublisherModal/>
             </div>
         </div>
-        <RadzenGrid TItem="PublisherResponseDto" Data="@_publishers" >
+        <RadzenGrid TItem="PublisherResponseDto" Data="@_publishers" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
             <Columns>
                 <RadzenGridColumn TItem="PublisherResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
                 <RadzenGridColumn TItem="PublisherResponseDto" Property="Name" Title="Name"></RadzenGridColumn>

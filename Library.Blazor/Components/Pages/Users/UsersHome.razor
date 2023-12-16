@@ -14,7 +14,7 @@
                 <h2>Users</h2>
             </div>
         </div>
-        <RadzenGrid TItem="UserResponseDto" Data="@_users" >
+        <RadzenGrid TItem="UserResponseDto" Data="@_users" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
             <Columns>
                 <RadzenGridColumn TItem="UserResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
                 <RadzenGridColumn TItem="UserResponseDto" Property="Name" Title="Name"></RadzenGridColumn>

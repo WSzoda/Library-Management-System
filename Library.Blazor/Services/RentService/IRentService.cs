@@ -7,4 +7,5 @@ public interface IRentService
     Task RentBook(BookResponseDto bookToRent);
     Task ReturnBook(BookResponseDto bookToReturn);
     Task<IEnumerable<RentResponseDto>> GetRentsAsync();
+    Task<IEnumerable<RentResponseDto>> GetAllRentsAsync();
 }

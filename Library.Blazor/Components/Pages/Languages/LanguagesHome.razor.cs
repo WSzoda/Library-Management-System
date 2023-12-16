@@ -6,7 +6,6 @@ namespace Library.Blazor.Components.Pages.Languages;
 
 partial class LanguagesHome
 {
-    
     [Inject]
     private ILanguageService? LanguageService { get; set; }
     

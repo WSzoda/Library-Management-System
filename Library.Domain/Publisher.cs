@@ -12,7 +12,6 @@ namespace Library.Domain
         public int YearOfCreation { get; set; }
         public int CountryId { get; set; }
         public Country? Country { get; set; }
-        [JsonIgnore]
         public IEnumerable<Book>? Books { get; set; }
     }
 }

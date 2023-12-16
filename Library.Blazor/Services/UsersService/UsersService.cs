@@ -77,14 +77,13 @@ public class UsersService : IUsersService
         }
     }
 
-    public Task EditUserPassword(PasswordEditDto dto)
+    public async Task EditUserPassword(PasswordEditDto dto)
     {
         try
         {
             var userJson = new StringContent(JsonSerializer.Serialize(dto), Encoding.UTF8, "application/json");
-            var response = _httpClient.PatchAsync($"{Endpoint}/password", userJson);
-            response.Result.EnsureSuccessStatusCode();
-            return Task.CompletedTask;
+            var response = await _httpClient.PatchAsync($"{Endpoint}/password", userJson);
+            response.EnsureSuccessStatusCode();
         }
         catch (Exception e)
         {

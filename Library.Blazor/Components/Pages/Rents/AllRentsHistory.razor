@@ -1,4 +1,4 @@
-﻿@page "/account/renthistory"
+﻿@page "/rents"
 
 <div class="container mt-4">
     @if (_isLoading)
@@ -11,15 +11,26 @@
     {
         <div class="row justify-content-between align-items-center mb-3">
             <div class="col-auto">
-                <h2>Your Rents</h2>
+                <h2>All Rents</h2>
             </div>
         </div>
         <RadzenGrid TItem="RentResponseDto" Data="@_rents" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
             <Columns>
+                <RadzenGridColumn TItem="RentResponseDto" Property="UserId" Title="User Id"></RadzenGridColumn>
                 <RadzenGridColumn TItem="RentResponseDto" Property="Book.Title" Title="Book Title"></RadzenGridColumn>
                 <RadzenGridColumn TItem="RentResponseDto" Property="Book.ISBN" Title="ISBN"></RadzenGridColumn>
                 <RadzenGridColumn TItem="RentResponseDto" Property="RentalDate" Title="Rent Date"></RadzenGridColumn>
                 <RadzenGridColumn TItem="RentResponseDto" Property="ReturnDate" Title="Return Date"></RadzenGridColumn>
+                <RadzenGridColumn TItem="RentResponseDto" Title="Actions">
+                    <Template Context="rent">
+                        <div class="btn-group">
+                            @if (!rent.Returned)
+                            {
+                                <ReturnModal BookToReturn="rent.Book"/>
+                            }
+                        </div>
+                    </Template>
+                </RadzenGridColumn>
             </Columns>
         </RadzenGrid>
     }

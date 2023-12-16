@@ -1,0 +1,41 @@
+﻿@page "/books/listing"
+
+<div class="container mt-4">
+    @if (_isLoading)
+    {
+        <div class="col-md-12">
+            <h3 class="text-center">Loading...</h3>
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-between align-items-center mb-3">
+            <div class="col-auto">
+                <h2>Books</h2>
+            </div>
+            <div class="col-auto">
+                <AddBookForm/>
+            </div>
+        </div>
+        <RadzenGrid TItem="BookResponseDto" Data="@_books" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
+            <Columns>
+                <RadzenGridColumn TItem="BookResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
+                <RadzenGridColumn TItem="BookResponseDto" Property="Title" Title="Name"></RadzenGridColumn>
+                <RadzenGridColumn TItem="BookResponseDto" Property="YearOfPublishing" Title="Year"></RadzenGridColumn>
+                <RadzenGridColumn TItem="BookResponseDto" Property="NumberOfPages" Title="Pages"></RadzenGridColumn>
+                <RadzenGridColumn TItem="BookResponseDto" Property="ISBN" Title="ISBN"></RadzenGridColumn>
+                <RadzenGridColumn TItem="BookResponseDto" Property="IsAvailable" Title="Available?"></RadzenGridColumn>
+                <RadzenGridColumn TItem="BookResponseDto" Property="Language.LanguageName" Title="Language"></RadzenGridColumn>
+                <RadzenGridColumn TItem="BookResponseDto" Property="Genre.Name" Title="Genre"></RadzenGridColumn>
+                <RadzenGridColumn TItem="BookResponseDto" Property="Publisher.Name" Title="Publisher"></RadzenGridColumn>
+                <RadzenGridColumn TItem="BookResponseDto" Title="Actions">
+                    <Template Context="book">
+                        <div class="btn-group">
+                            <AddBookForm IsEdited="true"/>
+                        </div>
+                    </Template>
+                </RadzenGridColumn>
+            </Columns>
+        </RadzenGrid>
+    }
+</div>

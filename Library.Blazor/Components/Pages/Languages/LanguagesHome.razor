@@ -17,7 +17,7 @@
                 <LanguageModal OnLanguageAdded="AddLanguage"/>
             </div>
         </div>
-        <RadzenGrid TItem="LanguageResponseDto" Data="@_languages" >
+        <RadzenGrid TItem="LanguageResponseDto" Data="@_languages" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
             <Columns>
                 <RadzenGridColumn TItem="LanguageResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
                 <RadzenGridColumn TItem="LanguageResponseDto" Property="LanguageName" Title="Name"></RadzenGridColumn>

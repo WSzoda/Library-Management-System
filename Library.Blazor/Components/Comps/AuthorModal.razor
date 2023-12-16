@@ -1,10 +1,10 @@
 ﻿@if (_isOpen)
 {
-    <div class="modal" tabindex="-1" role="dialog" id="addCountryModal" style="display: block; background: rgba(0, 0, 0, 0.5);">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal" tabindex="-1" role="dialog" id="addPublisherModal" style="display: block; background: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Country</h5>
+                    <h5 class="modal-title">@_modalButtonsText</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="CloseModal">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -12,10 +12,21 @@
                 <div class="modal-body my-3">
                     <form @onsubmit="HandleSubmit">
                         <div class="form-group">
-                            <label for="inputCountryName">Country Name</label>
-                            <input type="text" class="form-control" id="inputCountryName" placeholder="Enter country name" @bind="_name" />
+                            <label for="inputAuthorName">Name</label>
+                            <input type="text" class="form-control" id="inputAuthorName" placeholder="Enter author name" @bind="_name" />
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block mt-5">Add Country</button>
+                        <div class="form-group">
+                            <label for="inputAuthorSurname">Surname</label>
+                            <input type="text" class="form-control" id="inputAuthorSurname" placeholder="Enter author surname" @bind="_surname" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAuthorCountry">Country</label>
+                            <div class="form-group">
+                                <RadzenDropDownDataGrid class="form-control" id="inputAuthorCountry" @bind-Value="@_selectedCountry" Data=@_countries.Select(p => p.Name) TValue="string" />
+                                <CountryModal OnCountryAdded="AddNewCountry"/>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-4">@_modalButtonsText</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -26,6 +37,6 @@
     </div>
 }
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCountryModal" @onclick="OpenModal">
-    Add new Country
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPublisherModal" @onclick="OpenModal">
+    @_modalButtonsText
 </button>

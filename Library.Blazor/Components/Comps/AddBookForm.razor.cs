@@ -11,6 +11,8 @@ namespace Library.Blazor.Components.Comps
 {
     public partial class AddBookForm
     {
+        [Parameter]
+        public bool IsEdited { get; set; }
         
         [Inject]
         private IAuthorService AuthorService { get; set; }
@@ -23,6 +25,10 @@ namespace Library.Blazor.Components.Comps
         [Inject]
         private IBookService BookService { get; set; }
 
+        
+        
+        private bool _isOpen;
+        private string _modalButtonsText = "Add Book";
 
 
         private IEnumerable<AuthorResponseDto> AuthorsList { get; set; } = new List<AuthorResponseDto>();
@@ -35,6 +41,16 @@ namespace Library.Blazor.Components.Comps
         private string SelectedPublisher { get; set; } = String.Empty;
 
         private BookCreateDto _bookCreateDto = new BookCreateDto();
+        
+        private void CloseModal()
+        {
+            _isOpen = false;
+        }
+    
+        private void OpenModal()
+        {
+            _isOpen = true;
+        }
 
         private void CreateBook()
         {
@@ -59,10 +75,16 @@ namespace Library.Blazor.Components.Comps
             };
 
             BookService.CreateBookAsync(bookCreateDto);
+            CloseModal();
         }
 
         protected override async Task OnInitializedAsync()
         {
+            if (IsEdited)
+            {
+                _modalButtonsText = "Edit Book";
+            }
+            
             AuthorsList = await AuthorService.GetAuthorsAsync();
             LanguagesList = await LanguageService.GetLanguagesAsync();
             GenresList = await GenreService.GetGenresAsync();
@@ -96,6 +118,12 @@ namespace Library.Blazor.Components.Comps
         {
             PublishersList = PublishersList.Append(publisher);
             SelectedPublisher = publisher.Name;
+            StateHasChanged();
+        }
+        private void AddNewAuthor(AuthorResponseDto author)
+        {
+            AuthorsList = AuthorsList.Append(author);
+            SelectedAuthor = author.Name;
             StateHasChanged();
         }
     }

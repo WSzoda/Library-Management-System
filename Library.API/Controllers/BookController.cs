@@ -21,7 +21,7 @@ namespace Library.API.Controllers
         private readonly IMapper _mapper;
         private readonly IFileService _fileService;
 
-        public BookController(IBookRepository booksRepository, ILogger<BookController> logger, IMapper mapper, IAuthorBookRepository authorBookRepository, IFileService fileService, IRentService rentService, IRentalRepository rentalRepository)
+        public BookController(IBookRepository booksRepository, ILogger<BookController> logger, IMapper mapper, IAuthorBookRepository authorBookRepository, IFileService fileService, IRentalRepository rentalRepository)
         {
             _booksRepository = booksRepository;
             _logger = logger;
@@ -42,7 +42,7 @@ namespace Library.API.Controllers
             {
                 book.Authors = _mapper.Map<List<AuthorResponseDto>>(books.Where(b => b.Id == book.Id).SelectMany(b => b.BookAuthors!).Select(ba => ba.Author).ToList());
                 var rents = _rentalRepository.GetRents(book.Id);
-                book.IsAvailable = rents.Result.All(r => r.ReturnDate != "");
+                book.IsAvailable = rents.Result.All(r => r.Returned);
             }
             return Ok(booksDto);
         }

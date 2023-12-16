@@ -12,6 +12,15 @@ partial class AuthorModal
     [Parameter]
     public Action<AuthorResponseDto>? OnAuthorAdded { get; set; }
     
+    [Parameter]
+    public Action<AuthorResponseDto>? OnAuthorEdited { get; set; }
+    
+    [Parameter]
+    public AuthorResponseDto? AuthorToEdit { get; set; }
+    
+    [Parameter]
+    public bool IsEdited { get; set; }
+
     [Inject]
     private IAuthorService? AuthorService { get; set; }
     [Inject]
@@ -21,12 +30,20 @@ partial class AuthorModal
     private string _surname = default!;
     private string _selectedCountry = default!;
     private bool _isOpen;
+    private string _modalButtonsText = "Add Author";
     private IEnumerable<CountryResponseDto> _countries = default!;
 
     protected override async Task OnInitializedAsync()
     {
         _countries = await CountryService!.GetCountriesAsync();
         _countries = _countries.ToList();
+        if (IsEdited)
+        {
+            _name = AuthorToEdit!.Name;
+            _surname = AuthorToEdit.Surname;
+            _selectedCountry = _countries.First(c => c.Id == AuthorToEdit.CountryId).Name;
+            _modalButtonsText = "Edit Author";
+        }
     }
 
     private async Task HandleSubmit()
@@ -61,5 +78,12 @@ partial class AuthorModal
     private void OpenModal()
     {
         _isOpen = true;
+    }
+    
+    private void AddNewCountry(CountryResponseDto country)
+    {
+        _countries = _countries.Append(country);
+        _selectedCountry = country.Name;
+        StateHasChanged();
     }
 }

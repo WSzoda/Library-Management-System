@@ -13,48 +13,43 @@ namespace Library.API.Data
         public DbSet<AuthorBook> AuthorBooks { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Author> Authors { get; set; }
-        //public DbSet<Worker> Workers { get; set; }
-        //public DbSet<Customer> Customers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            //modelBuilder.Entity<User>()
-            //    .ToTable("Users");
-
-            //modelBuilder.Entity<Customer>()
-            //    .ToTable("Customers")
-            //    .HasOne(c => c.User)
-            //    .WithOne(u => u.Customer)
-            //    .HasForeignKey<Customer>(c => c.UserId);
-
-            //modelBuilder.Entity<Worker>()
-            //    .ToTable("Workers")
-            //    .HasOne(w => w.User)
-            //    .WithOne(u => u.Worker)
-            //    .HasForeignKey<Worker>(w => w.UserId);
-
             modelBuilder.Entity<Role>().HasData(
                 new Role { Id = 1, Name = "User" },
                 new Role { Id = 2, Name = "Worker" },
                 new Role { Id = 3, Name = "Admin" });
 
-            modelBuilder.Entity<Book>().HasOne(b => b.Genre).WithMany(g => g.Books).HasForeignKey(b => b.GenreId);
-            modelBuilder.Entity<Book>().HasOne(b => b.Publisher).WithMany(p => p.Books).HasForeignKey(b => b.PublisherId);
-            modelBuilder.Entity<Book>().HasOne(b => b.Language).WithMany(l => l.Books).HasForeignKey(b => b.LanguageId);
+            modelBuilder.Entity<Book>().HasOne(b => b.Genre).WithMany(g => g.Books)
+                .HasForeignKey(b => b.GenreId);
+            modelBuilder.Entity<Book>().HasOne(b => b.Publisher).WithMany(p => p.Books)
+                .HasForeignKey(b => b.PublisherId);
+            modelBuilder.Entity<Book>().HasOne(b => b.Language).WithMany(l => l.Books)
+                .HasForeignKey(b => b.LanguageId);
             modelBuilder.Entity<AuthorBook>().HasKey(ab => new { ab.AuthorId, ab.BookId });
-            modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Author).WithMany(a => a.AuthorBooks).HasForeignKey(ab => ab.AuthorId).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Book).WithMany(b => b.BookAuthors).HasForeignKey(ab => ab.BookId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Author)
+                .WithMany(a => a.AuthorBooks)
+                .HasForeignKey(ab => ab.AuthorId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<AuthorBook>().HasOne(ab => ab.Book)
+                .WithMany(b => b.BookAuthors).HasForeignKey(ab => ab.BookId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Review>().HasOne(r => r.Book).WithMany(b => b.Reviews).HasForeignKey(r => r.BookId);
-            modelBuilder.Entity<Review>().HasOne(r => r.User).WithMany(r => r.Reviews).HasForeignKey(r => r.UserId);
-            modelBuilder.Entity<Rental>().HasOne(r => r.Book).WithMany(b => b.Rentals).HasForeignKey(r => r.BookId);
-            modelBuilder.Entity<Rental>().HasOne(r => r.User).WithMany(r => r.Rentals).HasForeignKey(r => r.UserId);
-            modelBuilder.Entity<Publisher>().HasOne(p => p.Country).WithMany(c => c.Publishers).HasForeignKey(p => p.CountryId);
-            modelBuilder.Entity<Author>().HasOne(a => a.Country).WithMany(c => c.Authors).HasForeignKey(a => a.CountryId);
+            modelBuilder.Entity<Review>().HasOne(r => r.Book).WithMany(b => b.Reviews)
+                .HasForeignKey(r => r.BookId);
+            modelBuilder.Entity<Review>().HasOne(r => r.User).WithMany(r => r.Reviews)
+                .HasForeignKey(r => r.UserId);
+            modelBuilder.Entity<Rental>().HasOne(r => r.Book).WithMany(b => b.Rentals)
+                .HasForeignKey(r => r.BookId);
+            modelBuilder.Entity<Rental>().HasOne(r => r.User).WithMany(r => r.Rentals)
+                .HasForeignKey(r => r.UserId);
+            modelBuilder.Entity<Publisher>().HasOne(p => p.Country).WithMany(c => c.Publishers)
+                .HasForeignKey(p => p.CountryId);
+            modelBuilder.Entity<Author>().HasOne(a => a.Country).WithMany(c => c.Authors)
+                .HasForeignKey(a => a.CountryId);
 
 
             modelBuilder.Entity<Language>().HasData(

@@ -14,12 +14,16 @@ public class RentalRepository : IRentalRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Rental>> GetRents(int? id = null)
+    public async Task<IEnumerable<Rental>> GetRents(int? id = null, int? userId = null)
     {
         var rents = _context.Rentals.Include(r => r.Book).Include(r => r.User).AsSplitQuery();
         if (id != null)
         {
             rents = rents.Where(r => r.BookId == id);
+        }
+        if (userId != null)
+        {
+            rents = rents.Where(r => r.UserId == userId);
         }
         return await rents.ToListAsync();
     }

@@ -28,16 +28,24 @@ public class RentController : ControllerBase
         try
         {
             IEnumerable<Rental> rents;
-            if(!HttpContext.User.IsInRole("Admin,Worker"))
-            {
                 var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 if(userId is null) throw new Exception("User not found");
-                rents = await _rentalRepository.GetRents(int.Parse(userId));
-            }
-            else
-            {
-                rents = await _rentalRepository.GetRents(null);
-            }
+                rents = await _rentalRepository.GetRents(null, int.Parse(userId));
+            _logger.LogInformation("Getting all rents");
+            var rentsDto = _mapper.Map<IEnumerable<RentResponseDto>>(rents);
+            return Ok(rentsDto);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    [HttpGet("all")]
+    public async Task<ActionResult<IEnumerable<RentResponseDto>>> GetAllRents()
+    {
+        try
+        {
+            IEnumerable<Rental> rents = await _rentalRepository.GetRents(null);
             _logger.LogInformation("Getting all rents");
             var rentsDto = _mapper.Map<IEnumerable<RentResponseDto>>(rents);
             return Ok(rentsDto);

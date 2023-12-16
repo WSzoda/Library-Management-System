@@ -17,7 +17,7 @@
                 <GenreModal/>
             </div>
         </div>
-        <RadzenGrid TItem="GenreResponseDto" Data="@_genres" >
+        <RadzenGrid TItem="GenreResponseDto" Data="@_genres" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
             <Columns>
                 <RadzenGridColumn TItem="GenreResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
                 <RadzenGridColumn TItem="GenreResponseDto" Property="Name" Title="Name"></RadzenGridColumn>

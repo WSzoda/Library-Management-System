@@ -34,6 +34,22 @@ public class RentService : IRentService
         }
     }
     
+    public async Task<IEnumerable<RentResponseDto> > GetAllRentsAsync()
+    {
+        try
+        {
+            var stream = await _httpClient.GetStreamAsync($"{Endpoint}/all");
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var rents = await JsonSerializer.DeserializeAsync<IEnumerable<RentResponseDto>>(stream, options);
+            return rents!;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
     public async Task RentBook(BookResponseDto bookToRent)
     {
         try

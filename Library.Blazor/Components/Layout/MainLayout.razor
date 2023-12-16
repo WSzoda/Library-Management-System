@@ -1,35 +1,58 @@
-﻿@inherits LayoutComponentBase
-<div class="page">
-    <main>
-        <div class="row bg-primary text-white p-2">
-            <div class="col">
-                <p class="m-0">Welcome to Your Library</p>
-            </div>
-        </div>
+﻿@using Library.Domain
+@using System.Security.Claims
+@inherits LayoutComponentBase
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
 
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <NavLink class="navbar-brand" href="/">Your Library</NavLink>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <NavLink class="nav-link" href="/">Home</NavLink>
-                        </li>
-                        <li class="nav-item">
-                            <NavLink class="nav-link" href="/books">Books</NavLink>
-                        </li>
-                        <!-- Add more navigation links as needed -->
-                    </ul>
-                </div>
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => _sidebar1Expanded = !_sidebar1Expanded)" />
+            <RadzenLabel Text="Library Manager" />
+        </RadzenStack>
+    </RadzenHeader>
+    <RadzenSidebar @bind-Expanded="@_sidebar1Expanded">
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="Books" Icon="home" Click="@(() => NavigateTo("/books"))" />
+            <RadzenPanelMenuItem Text="Account" Icon="account_box" Click="@(() => NavigateTo("/account"))" />
+        </RadzenPanelMenu>
+            <div class="rz-p-4">
+                Worker Zone
             </div>
-        </nav>
-
-        <article>
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="Users List" Icon="account_box" Click="@(() => NavigateTo("/users"))"/>
+            <RadzenPanelMenuItem Text="Rents List" Icon="list" Click="@(() => NavigateTo("/rents"))"/>
+            <RadzenPanelMenuItem Text="Books List" Icon="list" Click="@(() => NavigateTo("/books"))"/>
+            <RadzenPanelMenuItem Text="Authors List" Icon="list" Click="@(() => NavigateTo("/authors"))"/>
+            <RadzenPanelMenuItem Text="Genres List" Icon="list" Click="@(() => NavigateTo("/genres"))"/>
+            <RadzenPanelMenuItem Text="Countries List" Icon="list" Click="@(() => NavigateTo("/countries"))"/>
+            <RadzenPanelMenuItem Text="Publishers List" Icon="list" Click="@(() => NavigateTo("/publishers"))"/>
+            <RadzenPanelMenuItem Text="Languages List" Icon="list" Click="@(() => NavigateTo("/languages"))"/>
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="rz-p-4">
             @Body
-        </article>
-    </main>
-</div>
+        </div>
+    </RadzenBody>
+</RadzenLayout>
+
+@code {
+    bool _sidebar1Expanded = true;
+
+    private ClaimsPrincipal? _user;
+
+    private void NavigateTo(string uri)
+    {
+        NavigationManager.NavigateTo(uri);
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        _user = authState.User;
+        StateHasChanged();
+    }
+
+}
