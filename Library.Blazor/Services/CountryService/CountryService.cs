@@ -47,7 +47,6 @@ public class CountryService : ICountryService
         {
             throw new Exception("Something went wrong");
         }
-
         return country;
     }
 

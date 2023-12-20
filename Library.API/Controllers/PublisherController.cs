@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using Library.API.Data.Abstract;
+using Library.Domain;
 using Library.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
 {
     [ApiController]
     [Route("api/publishers")]
+    [Authorize]
     public class PublisherController : ControllerBase
     {
         private readonly IPublisherRepository _publisherRepository;
@@ -34,7 +37,7 @@ namespace Library.API.Controllers
             {
                 _logger.LogError(ex, "Error happened when getting all publishers");
                 return BadRequest();
-            }   
+            }
         }
 
         [HttpGet]
@@ -57,9 +60,9 @@ namespace Library.API.Controllers
             {
                 _logger.LogError(ex, $"Id cannot be less than 1");
                 return BadRequest();
-            }   
+            }
         }
-        
+
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult> DeletePublisher(int id)
@@ -79,7 +82,43 @@ namespace Library.API.Controllers
             {
                 _logger.LogError(ex, $"Id cannot be less than 1");
                 return BadRequest();
-            }   
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<PublisherResponseDto>> CreatePublisher(PublisherCreateDto publisherCreateDto)
+        {
+            _logger.LogInformation("Creating a new publisher");
+
+            try
+            {
+                var publisher = _mapper.Map<Publisher>(publisherCreateDto);
+                await _publisherRepository.AddPublisher(publisher);
+                var publisherResponseDto = _mapper.Map<PublisherResponseDto>(publisher);
+                return CreatedAtAction(nameof(GetPublisherById), new { id = publisherResponseDto.Id }, publisherResponseDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while creating a new publisher");
+                return BadRequest();
+            }
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<PublisherResponseDto>> UpdatePublisher(int id, PublisherResponseDto? dto)
+        {
+            try
+            {
+                _logger.LogInformation($"Editing country with id: {id}");
+                var publisherEntity = _mapper.Map<Publisher>(dto);
+                await _publisherRepository.EditPublisher(publisherEntity.Id, publisherEntity);
+                return NoContent();
+            }
+            catch (ArgumentNullException)
+            {
+                _logger.LogWarning($"Country with id: {id} not found");
+                return NotFound($"Country with id: {id} not found");
+            }
         }
     }
 }

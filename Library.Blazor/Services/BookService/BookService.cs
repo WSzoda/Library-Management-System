@@ -51,7 +51,15 @@ namespace Library.Blazor.Services.BookService
             var createdBook = await JsonSerializer.DeserializeAsync<BookResponseDto>(stream, options);
             return createdBook!;
         }
-        
-        
+
+        public async Task<BookResponseDto> EditBookAsync(int bookId, BookCreateDto book)
+        {
+            var bookJson = new StringContent(JsonSerializer.Serialize(book), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"{Endpoint}/{bookId}", bookJson);
+            var stream = await response.Content.ReadAsStreamAsync();
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var createdBook = await JsonSerializer.DeserializeAsync<BookResponseDto>(stream, options);
+            return createdBook!;
+        }
     }
 }

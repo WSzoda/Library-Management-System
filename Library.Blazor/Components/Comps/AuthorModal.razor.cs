@@ -2,13 +2,13 @@
 using Library.Blazor.Services.CountryService;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 using static System.String;
 
 namespace Library.Blazor.Components.Comps;
 
 partial class AuthorModal
 {
-    //TODO: End implementation
     [Parameter]
     public Action<AuthorResponseDto>? OnAuthorAdded { get; set; }
     
@@ -25,6 +25,8 @@ partial class AuthorModal
     private IAuthorService? AuthorService { get; set; }
     [Inject]
     private ICountryService? CountryService { get; set; }
+    [Inject]
+    NotificationService NotificationService { get; set; }
 
     private string _name = default!;
     private string _surname = default!;
@@ -61,8 +63,8 @@ partial class AuthorModal
         }
         catch (Exception e)
         {
+            NotificationService.Notify(NotificationSeverity.Error, "Error", "Something went wrong, try again.");
             Console.WriteLine(e.Message);
-            throw;
         }
         finally
         {

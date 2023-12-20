@@ -1,6 +1,7 @@
 ﻿using Library.Blazor.Services.UsersService;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Library.Blazor.Components.Comps;
 
@@ -8,6 +9,8 @@ partial class EditPasswordModal
 {
     [Inject]
     public IUsersService? UsersService { get; set; }
+    [Inject]
+    NotificationService NotificationService { get; set; }
     
     private string _password = default!;
     private string _confirmPassword = default!;
@@ -28,8 +31,8 @@ partial class EditPasswordModal
         }
         catch (Exception e)
         {
+            NotificationService.Notify(NotificationSeverity.Error, "Error", "Something went wrong, try again.");
             Console.WriteLine(e.Message);
-            throw;
         }
         finally
         {

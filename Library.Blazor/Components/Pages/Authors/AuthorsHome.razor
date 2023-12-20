@@ -1,4 +1,5 @@
 ﻿@page "/authors"
+@attribute [Authorize(Roles = "Worker,Admin")]
 
 <div class="container mt-4">
     @if (_isLoading)
@@ -14,10 +15,12 @@
                 <h2>Authors</h2>
             </div>
             <div class="col-auto">
-                <AuthorModal OnAuthorAdded="AddAuthor"/>
+                <AuthorModal OnAuthorAdded="AddAuthor" />
             </div>
         </div>
-        <RadzenGrid TItem="AuthorResponseDto" Data="@_authors" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
+        <RadzenGrid TItem="AuthorResponseDto" Data="@_authors" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+            AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+            ShowPagingSummary="true">
             <Columns>
                 <RadzenGridColumn TItem="AuthorResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
                 <RadzenGridColumn TItem="AuthorResponseDto" Property="Name" Title="Name"></RadzenGridColumn>
@@ -25,7 +28,8 @@
                 <RadzenGridColumn TItem="AuthorResponseDto" Title="Actions">
                     <Template Context="author">
                         <div class="btn-group">
-                            <AuthorModal IsEdited="true" AuthorToEdit="author" OnAuthorEdited="EditAuthor"/>
+                            <AuthorModal IsEdited="true" AuthorToEdit="author" OnAuthorEdited="EditAuthor" />
+                            <button class="btn btn-danger" @onclick="() => DeleteAuthor(author)">Delete</button>
                         </div>
                     </Template>
                 </RadzenGridColumn>

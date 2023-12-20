@@ -1,4 +1,5 @@
 ﻿@page "/books/listing"
+@attribute [Authorize (Roles = "Worker,Admin")]
 
 <div class="container mt-4">
     @if (_isLoading)
@@ -14,10 +15,12 @@
                 <h2>Books</h2>
             </div>
             <div class="col-auto">
-                <AddBookForm/>
+                <BookModal OnBookAdded="AddBook"/>
             </div>
         </div>
-        <RadzenGrid TItem="BookResponseDto" Data="@_books" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
+        <RadzenGrid TItem="BookResponseDto" Data="@_books" AllowColumnResize="true" AllowAlternatingRows="false"
+            FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true"
+            PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true" >
             <Columns>
                 <RadzenGridColumn TItem="BookResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
                 <RadzenGridColumn TItem="BookResponseDto" Property="Title" Title="Name"></RadzenGridColumn>
@@ -25,13 +28,15 @@
                 <RadzenGridColumn TItem="BookResponseDto" Property="NumberOfPages" Title="Pages"></RadzenGridColumn>
                 <RadzenGridColumn TItem="BookResponseDto" Property="ISBN" Title="ISBN"></RadzenGridColumn>
                 <RadzenGridColumn TItem="BookResponseDto" Property="IsAvailable" Title="Available?"></RadzenGridColumn>
-                <RadzenGridColumn TItem="BookResponseDto" Property="Language.LanguageName" Title="Language"></RadzenGridColumn>
+                <RadzenGridColumn TItem="BookResponseDto" Property="Language.LanguageName" Title="Language">
+                </RadzenGridColumn>
                 <RadzenGridColumn TItem="BookResponseDto" Property="Genre.Name" Title="Genre"></RadzenGridColumn>
                 <RadzenGridColumn TItem="BookResponseDto" Property="Publisher.Name" Title="Publisher"></RadzenGridColumn>
-                <RadzenGridColumn TItem="BookResponseDto" Title="Actions">
+                <RadzenGridColumn TItem="BookResponseDto" Title="Actions" Width="300px">
                     <Template Context="book">
                         <div class="btn-group">
-                            <AddBookForm IsEdited="true"/>
+                            <BookModal IsEdited="true" BookToEdit="book" OnBookEdited="EditBook"/>
+                            <button class="btn btn-danger" @onclick="() => DeleteBook(book)">Delete</button>
                         </div>
                     </Template>
                 </RadzenGridColumn>

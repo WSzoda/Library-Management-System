@@ -9,6 +9,7 @@ namespace Library.API.Profiles
         public ReviewProfile()
         {
             CreateMap<Review, ReviewResponseDto>();
+            CreateMap<ReviewCreateDto, Review>();
         }
     }
 }

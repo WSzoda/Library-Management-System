@@ -1,6 +1,7 @@
 ﻿using Library.Blazor.Services.CountryService;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Library.Blazor.Components.Comps;
 
@@ -21,6 +22,8 @@ partial class CountryModal
     
     [Inject]
     private ICountryService? CountryService { get; set; }
+    [Inject]
+    NotificationService NotificationService { get; set; }
 
     private string _countryName = default!;
     private bool _isOpen;
@@ -45,8 +48,8 @@ partial class CountryModal
             }
             catch (Exception e)
             {
+                NotificationService.Notify(NotificationSeverity.Error, "Error", "Something went wrong, try again.");
                 Console.WriteLine(e.Message);
-                throw;
             }
             finally
             {
@@ -61,8 +64,8 @@ partial class CountryModal
         }
         catch (Exception e)
         {
+            NotificationService.Notify(NotificationSeverity.Error, "Error", "Something went wrong, try again.");
             Console.WriteLine(e.Message);
-            throw;
         }
         finally
         {

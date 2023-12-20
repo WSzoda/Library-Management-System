@@ -9,6 +9,8 @@ namespace Library.API.Profiles
         public PublisherProfile()
         {
             CreateMap<Publisher, PublisherResponseDto>();
+            CreateMap<PublisherCreateDto, Publisher>();
+            CreateMap<PublisherResponseDto, Publisher>();
         }
     }
 }

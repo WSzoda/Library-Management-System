@@ -1,8 +1,10 @@
-﻿using Library.Blazor.Services.CountryService;
+﻿using Library.Blazor.Components.Pages.Genres;
+using Library.Blazor.Services.CountryService;
 using Library.Blazor.Services.LanguageService;
 using Library.Blazor.Services.PublisherService;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Library.Blazor.Components.Comps;
 
@@ -24,6 +26,8 @@ partial class PublisherModal
     private IPublisherService? PublisherService { get; set; }
     [Inject]
     private ICountryService? CountryService { get; set; }
+    [Inject]
+    NotificationService NotificationService { get; set; }
 
     private string _publisherName = default!;
     private int _yearOfCreation;
@@ -54,21 +58,43 @@ partial class PublisherModal
         {
             return;
         }
-        
-        var publisher = new PublisherCreateDto() { Name = _publisherName, YearOfCreation = _yearOfCreation, CountryId = country.Id};
-        try
+        if (IsEdited)
         {
-            var newPublisher = await PublisherService!.AddPublisherAsync(publisher);
-            OnPublisherAdded?.Invoke(newPublisher);
+            PublisherToEdit.CountryId = country.Id;
+            PublisherToEdit.Name = _publisherName;
+            PublisherToEdit.YearOfCreation = _yearOfCreation;
+            try
+            {
+                var editedPublisher = await PublisherService!.EditPublisherAsync(PublisherToEdit);
+                OnPublisherEdited?.Invoke(editedPublisher);
+            }
+            catch (Exception e)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Error", "Something went wrong, try again.");
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                CloseModal();
+            }
         }
-        catch (Exception e)
+        else
         {
-            Console.WriteLine(e.Message);
-            throw;
-        }
-        finally
-        {
-            CloseModal();
+            var publisher = new PublisherCreateDto() { Name = _publisherName, YearOfCreation = _yearOfCreation, CountryId = country.Id};
+            try
+            {
+                var newPublisher = await PublisherService!.AddPublisherAsync(publisher);
+                OnPublisherAdded?.Invoke(newPublisher);
+            }
+            catch (Exception e)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Error", "Something went wrong, try again.");
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                CloseModal();
+            }
         }
     }
 

@@ -28,7 +28,7 @@ namespace Library.API.Data.Concrete
         public async Task<Publisher> GetPublisherById(int id)
         {
             if (id <= 0)
-            { 
+            {
                 throw new ArgumentException("Id cannot be less than 1");
             }
             var publisher = await _context.Publishers
@@ -42,9 +42,24 @@ namespace Library.API.Data.Concrete
             return publisher;
         }
 
+        public async Task EditPublisher(int id, Publisher publisher)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Id cannot be less than 1");
+            }
+            ArgumentNullException.ThrowIfNull(publisher);
+            
+            var publisherToUpdate = _context.Publishers.FirstOrDefault(x => x.Id == id);
+            ArgumentNullException.ThrowIfNull(publisherToUpdate);
+            
+            _context.Entry(publisherToUpdate).CurrentValues.SetValues(publisher);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeletePublisher(int id)
         {
-            if(id <= 0)
+            if (id <= 0)
             {
                 throw new ArgumentException("Id cannot be less than 1");
             }
@@ -52,6 +67,19 @@ namespace Library.API.Data.Concrete
             ArgumentNullException.ThrowIfNull(publisher);
             _context.Publishers.Remove(publisher);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Publisher> AddPublisher(Publisher publisher)
+        {
+            if (publisher == null)
+            {
+                throw new ArgumentNullException(nameof(publisher));
+            }
+
+            await _context.Publishers.AddAsync(publisher);
+            await _context.SaveChangesAsync();
+
+            return publisher;
         }
     }
 }

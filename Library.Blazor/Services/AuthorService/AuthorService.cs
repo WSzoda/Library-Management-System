@@ -41,5 +41,20 @@ namespace Library.Blazor.Services.AuthorService
             var newAuthor = await JsonSerializer.DeserializeAsync<AuthorResponseDto>(stream, options);
             return newAuthor!;
         }
+        public async Task<AuthorResponseDto> EditAuthorAsync(int id, AuthorResponseDto authorUpdateDto)
+        {
+            var apiUrl = $"{Endpoint}/{id}";
+            var authorJson = new StringContent(JsonSerializer.Serialize(authorUpdateDto), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(apiUrl, authorJson);
+            var stream = await response.Content.ReadAsStreamAsync();
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var updatedAuthor = await JsonSerializer.DeserializeAsync<AuthorResponseDto>(stream, options);
+            return updatedAuthor!;
+        }
+        public async Task DeleteAuthorAsync(int id)
+        {
+            var apiUrl = $"{Endpoint}/{id}";
+            await _httpClient.DeleteAsync(apiUrl);
+        }
     }
 }

@@ -23,9 +23,5 @@ partial class BookSingle
         Book = await BookService!.GetBookAsync(Id);
         _isLoading = false;
     }
-
-    private void RentBook()
-    {
-    }
     
 }

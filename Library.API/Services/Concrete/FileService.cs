@@ -11,26 +11,25 @@ namespace Library.API.Services.Concrete
             _appEnvironment = appEnvironment;
         }
 
-        public Tuple<int, string> SaveImage(IFormFile imageFile)
+        public async Task<Tuple<int, string>> SaveImage(byte[] imageBytes, string filename)
         {
             try
             {
                 var webRootPath = _appEnvironment.WebRootPath;
                 var imagesPath = Path.Combine(webRootPath, "Images");
 
-                var ext = Path.GetExtension(imageFile.FileName);
                 var allowedExtensions = new string[] { ".jpg", ".png", ".jpeg" };
-                if (!allowedExtensions.Contains(ext))
+                var extension = Path.GetExtension(filename);
+                Console.WriteLine(extension);
+                if (!allowedExtensions.Contains(extension))
                 {
                     string msg = string.Format("Only {0} extensions are allowed", string.Join(",", allowedExtensions));
                     return new Tuple<int, string>(0, msg);
                 }
                 string uniqueString = Guid.NewGuid().ToString();
-                var newFileName = uniqueString + ext;
+                var newFileName = uniqueString + extension;
                 var fileWithPath = Path.Combine(imagesPath, newFileName);
-                var stream = new FileStream(fileWithPath, FileMode.Create);
-                imageFile.CopyTo(stream);
-                stream.Close();
+                await File.WriteAllBytesAsync(fileWithPath, imageBytes);
                 return new Tuple<int, string>(1, newFileName);
             }
             catch (Exception ex)

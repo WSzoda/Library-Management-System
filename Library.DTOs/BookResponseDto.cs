@@ -8,7 +8,7 @@
         public int NumberOfPages { get; set; }
         public string Description { get; set; } = string.Empty;
         public string ISBN { get; set; } = string.Empty;
-        public string Image { get; set; } = string.Empty;
+        public string ImageName { get; set; } = string.Empty;
         public bool IsAvailable { get; set; }
         public LanguageResponseDto? Language { get; set; }
         public GenreResponseDto? Genre { get; set; }

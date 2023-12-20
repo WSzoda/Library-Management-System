@@ -1,7 +1,6 @@
 ﻿using Library.Blazor.Services.UsersService;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
-
 namespace Library.Blazor.Components.Pages.Account;
 
 partial class AccountHome

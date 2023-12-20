@@ -1,4 +1,5 @@
 ﻿@page "/publishers"
+@attribute [Authorize(Roles = "Worker,Admin")]
 
 <div class="container mt-4">
     @if (_isLoading)
@@ -14,15 +15,18 @@
                 <h2>Publishers</h2>
             </div>
             <div class="col-auto">
-                <PublisherModal/>
+                <PublisherModal OnPublisherAdded="AddPublisher"/>
             </div>
         </div>
-        <RadzenGrid TItem="PublisherResponseDto" Data="@_publishers" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
+        <RadzenGrid TItem="PublisherResponseDto" Data="@_publishers" AllowAlternatingRows="false"
+            FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true"
+            PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
             <Columns>
-                <RadzenGridColumn TItem="PublisherResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
-                <RadzenGridColumn TItem="PublisherResponseDto" Property="Name" Title="Name"></RadzenGridColumn>
-                <RadzenGridColumn TItem="PublisherResponseDto" Property="YearOfCreation" Title="Year of Creation"></RadzenGridColumn>
-                <RadzenGridColumn TItem="PublisherResponseDto">
+                <RadzenGridColumn TItem="PublisherResponseDto" Property="Id" Title="Id"/>
+                <RadzenGridColumn TItem="PublisherResponseDto" Property="Name" Title="Name"/>
+                <RadzenGridColumn TItem="PublisherResponseDto" Property="YearOfCreation" Title="Year of Creation"/>
+                
+                <RadzenGridColumn TItem="PublisherResponseDto" Title="Actions">
                     <Template Context="publisher">
                         <div class="btn-group">
                             <PublisherModal IsEdited="true" PublisherToEdit="publisher" OnPublisherEdited="EditPublisher"/>

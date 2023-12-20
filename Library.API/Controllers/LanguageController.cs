@@ -2,12 +2,14 @@
 using Library.API.Data.Abstract;
 using Library.Domain;
 using Library.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
 {
     [ApiController]
     [Route("api/languages")]
+    [Authorize]
     public class LanguageController : ControllerBase
     {
         private readonly ILogger<LanguageController> _logger;

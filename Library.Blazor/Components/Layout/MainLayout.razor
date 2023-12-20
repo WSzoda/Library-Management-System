@@ -1,34 +1,44 @@
-﻿@using Library.Domain
-@using System.Security.Claims
+﻿@using System.Security.Claims
 @inherits LayoutComponentBase
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NotificationService NotificationService
 @inject NavigationManager NavigationManager
 
+<RadzenNotification/>
 <RadzenLayout>
     <RadzenHeader>
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
             <RadzenSidebarToggle Click="@(() => _sidebar1Expanded = !_sidebar1Expanded)" />
             <RadzenLabel Text="Library Manager" />
+            <AuthorizeView>
+                <NotAuthorized>
+                    <RadzenButton Text="Login" Click="@(() => NavigateTo("/login"))" Style="margin-left: auto;" />
+                </NotAuthorized>
+            </AuthorizeView>
         </RadzenStack>
     </RadzenHeader>
     <RadzenSidebar @bind-Expanded="@_sidebar1Expanded">
         <RadzenPanelMenu>
             <RadzenPanelMenuItem Text="Books" Icon="home" Click="@(() => NavigateTo("/books"))" />
-            <RadzenPanelMenuItem Text="Account" Icon="account_box" Click="@(() => NavigateTo("/account"))" />
+            <AuthorizeView>
+                <RadzenPanelMenuItem Text="Account" Icon="account_box" Click="@(() => NavigateTo("/account"))" />
+            </AuthorizeView>
         </RadzenPanelMenu>
+        <AuthorizeView Roles="Worker,Admin">
             <div class="rz-p-4">
                 Worker Zone
             </div>
-        <RadzenPanelMenu>
-            <RadzenPanelMenuItem Text="Users List" Icon="account_box" Click="@(() => NavigateTo("/users"))"/>
-            <RadzenPanelMenuItem Text="Rents List" Icon="list" Click="@(() => NavigateTo("/rents"))"/>
-            <RadzenPanelMenuItem Text="Books List" Icon="list" Click="@(() => NavigateTo("/books"))"/>
-            <RadzenPanelMenuItem Text="Authors List" Icon="list" Click="@(() => NavigateTo("/authors"))"/>
-            <RadzenPanelMenuItem Text="Genres List" Icon="list" Click="@(() => NavigateTo("/genres"))"/>
-            <RadzenPanelMenuItem Text="Countries List" Icon="list" Click="@(() => NavigateTo("/countries"))"/>
-            <RadzenPanelMenuItem Text="Publishers List" Icon="list" Click="@(() => NavigateTo("/publishers"))"/>
-            <RadzenPanelMenuItem Text="Languages List" Icon="list" Click="@(() => NavigateTo("/languages"))"/>
-        </RadzenPanelMenu>
+            <RadzenPanelMenu>
+                <RadzenPanelMenuItem Text="Users List" Icon="account_box" Click="@(() => NavigateTo("/users"))" />
+                <RadzenPanelMenuItem Text="Rents List" Icon="list" Click="@(() => NavigateTo("/rents"))" />
+                <RadzenPanelMenuItem Text="Books List" Icon="list" Click="@(() => NavigateTo("/books/listing"))" />
+                <RadzenPanelMenuItem Text="Authors List" Icon="list" Click="@(() => NavigateTo("/authors"))" />
+                <RadzenPanelMenuItem Text="Genres List" Icon="list" Click="@(() => NavigateTo("/genres"))" />
+                <RadzenPanelMenuItem Text="Countries List" Icon="list" Click="@(() => NavigateTo("/countries"))" />
+                <RadzenPanelMenuItem Text="Publishers List" Icon="list" Click="@(() => NavigateTo("/publishers"))" />
+                <RadzenPanelMenuItem Text="Languages List" Icon="list" Click="@(() => NavigateTo("/languages"))" />
+            </RadzenPanelMenu>
+        </AuthorizeView>
     </RadzenSidebar>
     <RadzenBody>
         <div class="rz-p-4">

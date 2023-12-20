@@ -1,4 +1,5 @@
 ﻿@page "/languages"
+@attribute [Authorize(Roles = "Worker,Admin")]
 
 <div class="container mt-4">
     @if (_isLoading)
@@ -14,17 +15,19 @@
                 <h2>Languages</h2>
             </div>
             <div class="col-auto">
-                <LanguageModal OnLanguageAdded="AddLanguage"/>
+                <LanguageModal OnLanguageAdded="AddLanguage" />
             </div>
         </div>
-        <RadzenGrid TItem="LanguageResponseDto" Data="@_languages" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
+        <RadzenGrid TItem="LanguageResponseDto" Data="@_languages" AllowAlternatingRows="false"
+            FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true"
+            PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
             <Columns>
                 <RadzenGridColumn TItem="LanguageResponseDto" Property="Id" Title="Id"></RadzenGridColumn>
                 <RadzenGridColumn TItem="LanguageResponseDto" Property="LanguageName" Title="Name"></RadzenGridColumn>
-                <RadzenGridColumn TItem="LanguageResponseDto">
+                <RadzenGridColumn TItem="LanguageResponseDto" Title="Actions">
                     <Template Context="language">
                         <div class="btn-group">
-                            <LanguageModal IsEdited="true" LanguageToEdit="language"  OnLanguageEdited="EditLanguage"/>
+                            <LanguageModal IsEdited="true" LanguageToEdit="language" OnLanguageEdited="EditLanguage" />
                             <button class="btn btn-danger" @onclick="() => DeleteLanguage(language)">Delete</button>
                         </div>
                     </Template>

@@ -20,6 +20,15 @@
     </div>
 }
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rentBookModal" @onclick="OpenModal">
-    Rent this book
-</button>
+@if (BookToRent.IsAvailable)
+{
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rentBookModal" @onclick="OpenModal">
+        Rent this book
+    </button>
+}
+else
+{
+    <button type="button" class="btn btn-primary" disabled>
+        Book is not available
+    </button>
+}

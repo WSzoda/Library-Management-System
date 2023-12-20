@@ -243,7 +243,7 @@ namespace Library.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("ImageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -280,7 +280,7 @@ namespace Library.API.Migrations
                             Description = "A novel by F. Scott Fitzgerald",
                             GenreId = 2,
                             ISBN = "978-3-16-148410-0",
-                            Image = "great_gatsby.jpg",
+                            ImageName = "great_gatsby.jpg",
                             LanguageId = 1,
                             NumberOfPages = 180,
                             PublisherId = 3,
@@ -293,7 +293,7 @@ namespace Library.API.Migrations
                             Description = "A novel by Harper Lee",
                             GenreId = 4,
                             ISBN = "978-3-16-148410-1",
-                            Image = "to_kill_a_mockingbird.jpg",
+                            ImageName = "to_kill_a_mockingbird.jpg",
                             LanguageId = 1,
                             NumberOfPages = 281,
                             PublisherId = 3,
@@ -306,7 +306,7 @@ namespace Library.API.Migrations
                             Description = "A dystopian novel by George Orwell",
                             GenreId = 2,
                             ISBN = "978-3-16-148410-2",
-                            Image = "1984.jpg",
+                            ImageName = "1984.jpg",
                             LanguageId = 1,
                             NumberOfPages = 328,
                             PublisherId = 3,
@@ -319,7 +319,7 @@ namespace Library.API.Migrations
                             Description = "A novel by J.D. Salinger",
                             GenreId = 4,
                             ISBN = "978-3-16-148410-3",
-                            Image = "catcher_in_the_rye.jpg",
+                            ImageName = "catcher_in_the_rye.jpg",
                             LanguageId = 1,
                             NumberOfPages = 277,
                             PublisherId = 3,
@@ -332,7 +332,7 @@ namespace Library.API.Migrations
                             Description = "A novel by J.R.R. Tolkien",
                             GenreId = 1,
                             ISBN = "978-3-16-148410-4",
-                            Image = "the_hobbit.jpg",
+                            ImageName = "the_hobbit.jpg",
                             LanguageId = 1,
                             NumberOfPages = 310,
                             PublisherId = 1,
@@ -345,7 +345,7 @@ namespace Library.API.Migrations
                             Description = "A novel by J.R.R. Tolkien",
                             GenreId = 1,
                             ISBN = "978-3-16-148410-5",
-                            Image = "the_lord_of_the_rings.jpg",
+                            ImageName = "the_lord_of_the_rings.jpg",
                             LanguageId = 1,
                             NumberOfPages = 1178,
                             PublisherId = 1,

@@ -3,12 +3,14 @@ using AutoMapper;
 using Library.API.Data.Abstract;
 using Library.Domain;
 using Library.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers;
 
 [Route("api/countries")]
 [ApiController]
+[Authorize]
 public class CountryController : ControllerBase
 {
     private readonly IMapper _mapper;

@@ -6,6 +6,8 @@ namespace Library.API.Data.Abstract
     {
         Task<IEnumerable<Publisher>> GetAllPublishers();
         Task<Publisher> GetPublisherById(int id);
+        Task<Publisher> AddPublisher(Publisher publisher);
+        Task EditPublisher(int id, Publisher publisher);
         Task DeletePublisher(int id);
     }
 }

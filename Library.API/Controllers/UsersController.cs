@@ -3,12 +3,14 @@ using AutoMapper;
 using Library.API.Data.Abstract;
 using Library.Blazor.Services.UsersService;
 using Library.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers;
 
 [Route("api/users")]
 [ApiController]
+[Authorize]
 public class UsersController : ControllerBase
 {
     private readonly IUsersRepository _usersRepository;

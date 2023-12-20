@@ -1,6 +1,7 @@
 ﻿using Library.Blazor.Services.AuthorizationService;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Library.Blazor.Components.Pages.Authorization;
 
@@ -11,6 +12,8 @@ partial class Register
 
     [Inject]
     private NavigationManager navigationManager { get; set; }
+    [Inject]
+    NotificationService NotificationService { get; set; }
 
     private string email;
     private string password;
@@ -36,9 +39,10 @@ partial class Register
         {
             navigationManager.NavigateTo("/login");
         }
-        // Implement registration logic here
-        // You can use the provided properties (email, password, etc.) to capture user input
-        // Perform validation and send the registration data to your backend API
-        // Redirect or show appropriate messages based on the registration result
+        else
+        {
+            NotificationService.Notify(NotificationSeverity.Error, "Error", "Something went wrong, try again.");
+            Console.WriteLine(response.Content.ReadAsStringAsync());
+        }
     }
 }

@@ -1,0 +1,35 @@
+﻿@if (_isOpen)
+{
+    <div class="modal" tabindex="-1" role="dialog" id="addReviewModal" style="display: block; background: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Review</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="CloseModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body my-3">
+                    <form @onsubmit="HandleSubmit">
+                        <div class="form-group">
+                            <label for="inputReviewTitle">Review</label>
+                            <input type="text" class="form-control" id="inputReviewTitle" placeholder="Your Review" @bind="_description" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputReviewTitle">Rating</label>
+                            <input type="number" class="form-control" id="inputReviewTitle" placeholder="Rating" @bind="_rating" />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-5">Add Review</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CloseModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addReviewModal" @onclick="OpenModal">
+    Add Review
+</button>

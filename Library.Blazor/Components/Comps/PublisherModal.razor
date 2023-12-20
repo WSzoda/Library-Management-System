@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputPublisherCountry">Country</label>
-                            <div class="form-group">
+                            <div class="form-group d-flex flex-column">
                                 <RadzenDropDownDataGrid class="form-control" id="inputPublisherCountry" @bind-Value="@_selectedCountry" Data=@_countries.Select(p => p.Name) TValue="string" />
                                 <CountryModal OnCountryAdded="AddNewCountry"/>
                             </div>

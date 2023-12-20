@@ -3,12 +3,14 @@ using AutoMapper;
 using Library.API.Data.Abstract;
 using Library.Domain;
 using Library.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers;
 
 [ApiController]
 [Route("api/rents")]
+[Authorize]
 public class RentController : ControllerBase
 {
     private readonly IRentalRepository _rentalRepository;

@@ -10,7 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body my-3">
-                        <form @onsubmit="CreateBook">
+                        <form @onsubmit="CreateBookAsync">
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="title" @bind="_bookCreateDto.Title" required />

@@ -2,6 +2,7 @@
 using Library.Blazor.Services.LanguageService;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Library.Blazor.Components.Comps;
 
@@ -21,6 +22,8 @@ partial class GenreModal
     
     [Inject]
     private IGenreService? GenreService { get; set; }
+    [Inject]
+    NotificationService NotificationService { get; set; }
 
     private string _genreName = default!;
     private bool _isOpen;
@@ -46,8 +49,8 @@ partial class GenreModal
             }
             catch (Exception e)
             {
+                NotificationService.Notify(NotificationSeverity.Error, "Error", "Something went wrong, try again.");
                 Console.WriteLine(e.Message);
-                throw;
             }
             finally
             {

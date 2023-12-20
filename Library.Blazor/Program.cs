@@ -12,6 +12,7 @@ using Library.Blazor.Services.GenreService;
 using Library.Blazor.Services.LanguageService;
 using Library.Blazor.Services.PublisherService;
 using Library.Blazor.Services.RentService;
+using Library.Blazor.Services.ReviewsService;
 using Library.Blazor.Services.UsersService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -23,6 +24,8 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddAuthorizationCore();
 
+builder.Services.AddScoped<Radzen.NotificationService>();
+
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<ILanguageService, LanguageService>();
@@ -32,5 +35,6 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IRentService, RentService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 await builder.Build().RunAsync();

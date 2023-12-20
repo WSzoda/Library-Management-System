@@ -2,6 +2,7 @@
 using Library.Blazor.Services.UsersService;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Library.Blazor.Components.Comps;
 
@@ -13,6 +14,8 @@ partial class RentModal
     
     [Inject]
     private IRentService? RentService { get; set; }
+    [Inject]
+    NotificationService NotificationService { get; set; }
     
     private bool _isOpen;
     
@@ -24,8 +27,8 @@ partial class RentModal
         }
         catch (Exception e)
         {
+            NotificationService.Notify(NotificationSeverity.Error, "Error", "Something went wrong, try again.");
             Console.WriteLine(e.Message);
-            throw;
         }
         finally
         {

@@ -1,6 +1,7 @@
 ﻿using Library.Blazor.Services.LanguageService;
 using Library.DTOs;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Library.Blazor.Components.Comps;
 
@@ -20,6 +21,8 @@ partial class LanguageModal
     
     [Inject]
     private ILanguageService? LanguageService { get; set; }
+    [Inject]
+    NotificationService NotificationService { get; set; }
 
     private string _languageName = default!;
     private bool _isOpen;
@@ -45,8 +48,8 @@ partial class LanguageModal
             }
             catch (Exception e)
             {
+                NotificationService.Notify(NotificationSeverity.Error, "Error", "Something went wrong, try again.");
                 Console.WriteLine(e.Message);
-                throw;
             }
             finally
             {
